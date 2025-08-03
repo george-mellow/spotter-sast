@@ -1,0 +1,115 @@
+{
+  "custom_policies": {
+    "enterprise_security": {
+      "name": "Enterprise Security Policy",
+      "description": "Custom enterprise security requirements",
+      "rules": [
+        {
+          "id": "ENT001",
+          "name": "No hardcoded credentials in any form",
+          "severity": "Critical", 
+          "patterns": [
+            "(?:password|pwd|pass|secret|token|key)\\s*[=:]\\s*[\"'][^\"'\\s]{3,}[\"']",
+            "Bearer\\s+[A-Za-z0-9\\-._~+/]+=*",
+            "Basic\\s+[A-Za-z0-9+/]+=*"
+          ],
+          "remediation": "Use environment variables or secure key management"
+        },
+        {
+          "id": "ENT002", 
+          "name": "Mandatory input validation",
+          "severity": "High",
+          "patterns": [
+            "req\\.(body|params|query)\\.[^\\s]+\\s*(?!.*validate)",
+            "process\\.argv\\[\\d+\\]\\s*(?!.*validate)"
+          ],
+          "remediation": "Implement input validation for all user inputs"
+        },
+        {
+          "id": "ENT003",
+          "name": "Secure error handling",
+          "severity": "Medium", 
+          "patterns": [
+            "catch\\s*\\([^)]*\\)\\s*{[^}]*console\\.log",
+            "throw\\s+new\\s+Error\\([^)]*\\+[^)]*\\)"
+          ],
+          "remediation": "Don't expose sensitive information in error messages"
+        }
+      ],
+      "fail_thresholds": {
+        "critical": 0,
+        "high": 3,
+        "medium": 10
+      }
+    },
+    "web_application_security": {
+      "name": "Web Application Security Standards",
+      "description": "Security standards for web applications",
+      "rules": [
+        {
+          "id": "WEB001",
+          "name": "Prevent XSS in DOM manipulation", 
+          "severity": "High",
+          "patterns": [
+            "innerHTML\\s*=\\s*[^;]*\\+",
+            "outerHTML\\s*=\\s*[^;]*\\+",
+            "document\\.write\\s*\\([^)]*\\+"
+          ],
+          "remediation": "Use textContent or safe DOM methods"
+        },
+        {
+          "id": "WEB002",
+          "name": "Secure cookie configuration",
+          "severity": "Medium",
+          "patterns": [
+            "httpOnly\\s*:\\s*false",
+            "secure\\s*:\\s*false",
+            "sameSite\\s*:\\s*[\"']none[\"']"
+          ],
+          "remediation": "Configure cookies with httpOnly, secure, and sameSite attributes"
+        }
+      ],
+      "fail_thresholds": {
+        "critical": 0,
+        "high": 2,
+        "medium": 8
+      }
+    },
+    "api_security": {
+      "name": "API Security Standards", 
+      "description": "Security requirements for APIs",
+      "rules": [
+        {
+          "id": "API001",
+          "name": "Authentication required for all endpoints",
+          "severity": "Critical",
+          "patterns": [
+            "app\\.(get|post|put|delete)\\s*\\([^,]*,\\s*(?!.*auth)",
+            "router\\.(get|post|put|delete)\\s*\\([^,]*,\\s*(?!.*auth)"
+          ],
+          "remediation": "Implement authentication middleware for all API endpoints"
+        },
+        {
+          "id": "API002",
+          "name": "Rate limiting implementation",
+          "severity": "High", 
+          "patterns": [
+            "app\\.use\\s*\\([^)]*\\)\\s*(?!.*rateLimit)"
+          ],
+          "remediation": "Implement rate limiting to prevent abuse"
+        }
+      ],
+      "fail_thresholds": {
+        "critical": 0,
+        "high": 1,
+        "medium": 5
+      }
+    }
+  },
+  "policy_sets": {
+    "startup": ["owasp", "enterprise_security"],
+    "enterprise": ["owasp", "pci", "nist", "enterprise_security", "api_security"],
+    "web_app": ["owasp", "web_application_security", "enterprise_security"],
+    "api_only": ["owasp", "api_security", "enterprise_security"]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "roles": {
+    "security-admin": {
+      "description": "Full administrative access to all security functions",
+      "permissions": ["*"],
+      "level": 4
+    },
+    "security-analyst": {
+      "description": "Security analysis and reporting capabilities", 
+      "permissions": [
+        "scan:read",
+        "scan:execute", 
+        "report:read",
+        "report:generate",
+        "vulnerability:read",
+        "vulnerability:triage",
+        "policy:read",
+        "audit:read",
+        "monitoring:read",
+        "dashboard:read"
+      ],
+      "level": 3
+    },
+    "developer": {
+      "description": "Standard developer access for security scanning",
+      "permissions": [
+        "scan:read",
+        "scan:execute",
+        "report:read", 
+        "fix:suggest",
+        "fix:apply",
+        "vulnerability:read",
+        "dashboard:read"
+      ],
+      "level": 2
+    },
+    "auditor": {
+      "description": "Read-only access for compliance and auditing",
+      "permissions": [
+        "scan:read",
+        "report:read",
+        "vulnerability:read",
+        "audit:read",
+        "policy:read",
+        "compliance:read",
+        "dashboard:read"
+      ],
+      "level": 1
+    },
+    "viewer": {
+      "description": "Basic read-only access",
+      "permissions": [
+        "scan:read",
+        "report:read",
+        "dashboard:read"
+      ],
+      "level": 0
+    }
+  },
+  "permissions": {
+    "scan:read": "View scan results",
+    "scan:execute": "Execute security scans",
+    "report:read": "View reports",
+    "report:generate": "Generate new reports",
+    "vulnerability:read": "View vulnerability details",
+    "vulnerability:triage": "Triage and manage vulnerabilities",
+    "fix:suggest": "Generate fix suggestions",
+    "fix:apply": "Apply automatic fixes", 
+    "policy:read": "View security policies",
+    "policy:manage": "Manage security policies",
+    "audit:read": "View audit logs",
+    "monitoring:read": "View monitoring status",
+    "monitoring:manage": "Manage continuous monitoring",
+    "dashboard:read": "View security dashboard",
+    "compliance:read": "View compliance status"
+  }
+}
