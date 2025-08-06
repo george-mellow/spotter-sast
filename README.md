@@ -1,20 +1,24 @@
-# 🔍 Spotter-SAST: Advanced Security Analysis Tool
+# 🔍 Spotter-SAST v2.1.0: Enterprise Security Analysis Platform
 
-A comprehensive Model Context Protocol (MCP) server providing enterprise-grade Static Application Security Testing (SAST) with multi-tool integration, AI-powered analysis, continuous monitoring, and compliance checking.
+A comprehensive Model Context Protocol (MCP) server providing enterprise-grade Static Application Security Testing (SAST) with advanced compliance verification, multi-tenant management, AI-powered analysis, and automated remediation workflows.
 
 ## 🚀 Overview
 
-Spotter-SAST is an advanced security analysis platform that combines multiple industry-standard SAST tools with intelligent automation, continuous monitoring, and comprehensive reporting. Built on the Model Context Protocol (MCP), it provides both real-time security analysis and long-term security posture management.
+Spotter-SAST is an advanced security analysis platform that combines multiple industry-standard SAST tools with intelligent automation, continuous monitoring, comprehensive compliance verification, and enterprise-grade reporting. Built on the Model Context Protocol (MCP), it provides both real-time security analysis and long-term security posture management with support for 9 major compliance frameworks.
 
-### 🎯 Key Features
+### 🎯 Core Features
 
 - **🔧 Multi-Tool Integration**: Seamlessly integrates Semgrep, Bandit, ESLint, and njsscan
+- **🏛️ Compliance Verification**: Support for HIPAA, GDPR, PCI DSS, ISO 27001, SOX, NIST CSF, CCPA, FISMA/FedRAMP
+- **🔄 Compliance Drift Detection**: Monitor compliance posture changes over time
+- **🏢 Multi-Tenant Management**: Manage multiple organizations with different compliance requirements
+- **🔒 Evidence Collection**: Cryptographically signed evidence with chain of custody
+- **🤖 Automated Remediation**: Framework-specific remediation workflows with SLA tracking
+- **📊 Advanced Analytics**: Predictive compliance analytics and executive dashboards
 - **🤖 AI-Powered Fixes**: Intelligent vulnerability remediation with confidence scoring
 - **👁️ Continuous Monitoring**: Real-time file system monitoring with automated alerts
-- **📊 Advanced Reporting**: Multiple formats including HTML, JSON, Markdown, and SARIF
+- **📈 Enterprise Reporting**: Multiple formats including HTML, JSON, Markdown, and SARIF
 - **🛡️ Enterprise Security**: OAuth 2.0, RBAC, audit logging, and session management
-- **📋 Compliance Checking**: OWASP Top 10, PCI DSS, and NIST framework mapping
-- **📈 Security Dashboard**: Real-time metrics and trend analysis
 
 ## 🏗️ Architecture
 
@@ -25,6 +29,43 @@ Spotter-SAST is an advanced security analysis platform that combines multiple in
 3. **ContinuousMonitor**: Provides real-time file monitoring and scheduled scans
 4. **AdvancedReporting**: Generates comprehensive reports in multiple formats
 5. **AIAutoFixer**: Intelligent vulnerability remediation with validation
+
+### Enhanced Compliance Components (v2.1.0)
+
+6. **ComplianceDriftDetector**: Monitors compliance posture changes and detects degradation
+7. **MultiTenantComplianceManager**: Manages compliance for multiple organizations/teams
+8. **ComplianceEvidenceCollector**: Collects and secures compliance evidence with cryptographic integrity
+9. **ComplianceRemediationEngine**: Automated remediation workflows with SLA tracking
+
+### Project Structure
+spotter-sast/
+├── src/
+│   ├── server.js                          # Main MCP server with 15+ tools
+│   ├── compliance/
+│   │   ├── compliance-verification.js     # 4 core compliance classes
+│   │   ├── compliance-mcp-tools.js        # 10 compliance-specific MCP tools
+│   │   └── logs/                          # Compliance audit logs
+│   └── logs/                              # General application logs
+├── config/
+│   ├── compliance-frameworks.json         # Framework definitions (9 frameworks)
+│   ├── compliance-settings.json           # User compliance configuration
+│   ├── enhanced-compliance-config.json    # Advanced compliance settings
+│   ├── custom-compliance-rules.json       # Organization-specific rules
+│   ├── custom-policies.json              # Security policies
+│   ├── monitoring-config.json            # Monitoring configuration
+│   ├── roles.json                        # RBAC role definitions
+│   └── tenants/                          # Multi-tenant configurations
+├── infra/
+│   ├── docker/                           # Docker configurations
+│   └── scripts/
+│       ├── compliance.sh                 # Compliance management script
+│       └── docker-helper.sh              # Docker utilities
+├── compliance-baselines/                 # Drift detection baselines
+├── compliance-evidence/                  # Cryptographically signed evidence
+├── incident-reports/                     # Remediation workflow reports
+├── test/
+│   └── test-compliance.js               # Compliance testing suite
+└── docs/                                # Comprehensive documentation
 
 ### Supported Languages & Tools
 
@@ -68,9 +109,31 @@ cp .env.example .env
 
 Key environment variables:
 ```env
+# Organization Configuration
+ORGANIZATION_INDUSTRY=general          # healthcare, finance, ecommerce, government, general
+ORGANIZATION_NAME=Your Organization
+CONTACT_EMAIL=compliance@yourorg.com
+
+# Security Configuration
 JWT_SECRET=your-secure-jwt-secret
 ENABLE_RBAC=true
-LOG_LEVEL=info
+ENABLE_AUDIT_LOGGING=true
+
+# Enhanced Compliance Features
+ENABLE_ENHANCED_COMPLIANCE=true
+ENABLE_COMPLIANCE_DRIFT_DETECTION=true
+ENABLE_MULTI_TENANT_MANAGEMENT=true
+ENABLE_EVIDENCE_COLLECTION=true
+ENABLE_AUTOMATED_REMEDIATION=true
+ENABLE_ADVANCED_ANALYTICS=true
+
+# Framework-Specific (auto-enabled based on ORGANIZATION_INDUSTRY)
+ENABLE_HIPAA=false
+ENABLE_GDPR=false
+ENABLE_PCI_DSS=false
+ENABLE_ISO27001=false
+ENABLE_SOX=false
+ENABLE_NIST_CSF=true
 ```
 
 ### 3. Launch Server
@@ -80,11 +143,14 @@ npm start
 ```
 
 The server will start with:
-- ✅ Multi-tool SAST capabilities
-- ✅ Real-time file monitoring
-- ✅ AI-powered auto-fixes
-- ✅ Comprehensive reporting
-- ✅ Security dashboard
+- ✅ 15+ MCP tools (8 core + 7 compliance tools)
+- ✅ Multi-tool SAST capabilities (Semgrep, Bandit, ESLint, njsscan)
+- ✅ Real-time compliance monitoring with drift detection
+- ✅ Multi-tenant compliance management
+- ✅ Cryptographic evidence collection with chain of custody
+- ✅ Automated remediation workflows with SLA tracking
+- ✅ AI-powered auto-fixes with validation
+- ✅ Advanced analytics and executive dashboards
 
 ## 🔧 Available MCP Tools (15+ Tools)
 
