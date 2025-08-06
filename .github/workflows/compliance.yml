@@ -1,0 +1,149 @@
+name: Spotter-SAST Compliance Security Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule: 
+    # Weekly compliance scan every Monday at 2 AM
+    - cron: '0 2 * * 1'
+
+env:
+  ORGANIZATION_INDUSTRY: ${{ vars.ORGANIZATION_INDUSTRY || 'general' }}
+  ENABLE_COMPLIANCE_LOGGING: true
+  DEFAULT_COMPLIANCE_FRAMEWORKS: ${{ vars.COMPLIANCE_FRAMEWORKS || 'owasp,nist_csf' }}
+
+jobs:
+  compliance-scan:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        scan-type: [security, compliance]
+        
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Full history for trend analysis
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+        
+    - name: Install Node.js dependencies
+      run: npm ci
+      
+    - name: Install Python security tools
+      run: pip install -r requirements.txt
+      
+    - name: Verify SAST tools installation
+      run: |
+        semgrep --version
+        bandit --version
+        eslint --version
+        njsscan --version
+        
+    - name: Setup compliance system
+      run: |
+        chmod +x compliance.sh
+        ./compliance.sh setup
+        
+    - name: Configure compliance frameworks
+      run: |
+        case "${{ env.ORGANIZATION_INDUSTRY }}" in
+          "healthcare")
+            ./compliance.sh configure-industry healthcare
+            echo "ENABLE_HIPAA=true" >> .env
+            ;;
+          "finance") 
+            ./compliance.sh configure-industry finance
+            echo "ENABLE_PCI_DSS=true" >> .env
+            echo "ENABLE_SOX=true" >> .env
+            ;;
+          "ecommerce")
+            ./compliance.sh configure-industry ecommerce
+            echo "ENABLE_PCI_DSS=true" >> .env
+            echo "ENABLE_GDPR=true" >> .env
+            ;;
+          "government")
+            ./compliance.sh configure-industry government
+            echo "ENABLE_FISMA=true" >> .env
+            ;;
+          *)
+            ./compliance.sh configure-industry general
+            ;;
+        esac
+        
+    - name: Run security scan
+      if: matrix.scan-type == 'security'
+      run: |
+        make scan SCAN_PATH=. REPORT_FORMAT=sarif
+        
+    - name: Run compliance scan
+      if: matrix.scan-type == 'compliance'
+      run: |
+        ./compliance.sh scan . "" json
+        ./compliance.sh report . html
+        
+    - name: Generate compliance evidence
+      if: matrix.scan-type == 'compliance'
+      run: |
+        mkdir -p compliance-evidence
+        echo "Scan completed at $(date)" > compliance-evidence/scan-metadata.txt
+        echo "Commit: ${{ github.sha }}" >> compliance-evidence/scan-metadata.txt
+        echo "Branch: ${{ github.ref_name }}" >> compliance-evidence/scan-metadata.txt
+        echo "Industry: ${{ env.ORGANIZATION_INDUSTRY }}" >> compliance-evidence/scan-metadata.txt
+        
+    - name: Upload SARIF results to GitHub Security
+      if: matrix.scan-type == 'security'
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: reports/enhanced-sast-report.sarif
+        category: spotter-sast-security
+        
+    - name: Upload compliance reports
+      if: matrix.scan-type == 'compliance'
+      uses: actions/upload-artifact@v3
+      with:
+        name: compliance-reports-${{ github.run_number }}
+        path: |
+          compliance-reports/
+          compliance-evidence/
+        retention-days: 90
+        
+    - name: Check compliance thresholds
+      if: matrix.scan-type == 'compliance'
+      run: |
+        # Parse JSON report and check thresholds
+        if [ -f "compliance-reports/compliance-report-*.json" ]; then
+          critical_count=$(jq -r '.frameworks | to_entries[] | select(.value.status == "FAIL") | .value.severityCounts.critical // 0' compliance-reports/compliance-report-*.json | awk '{sum+=$1} END {print sum+0}')
+          high_count=$(jq -r '.frameworks | to_entries[] | select(.value.status == "FAIL") | .value.severityCounts.high // 0' compliance-reports/compliance-report-*.json | awk '{sum+=$1} END {print sum+0}')
+          
+          echo "Critical violations: $critical_count"
+          echo "High violations: $high_count"
+          
+          # Set outputs for use in other steps
+          echo "critical_violations=$critical_count" >> $GITHUB_OUTPUT
+          echo "high_violations=$high_count" >> $GITHUB_OUTPUT
+          
+          # Fail if critical violations found (configurable)
+          if [ "$critical_count" -gt 0 ] && [ "${{ vars.FAIL_ON_CRITICAL_COMPLIANCE }}" = "true" ]; then
+            echo "❌ Critical compliance violations found: $critical_count"
+            exit 1
+          fi
+          
+          # Warn on high violations
+          if [ "$high_count" -gt "${COMPLIANCE_HIGH_THRESHOLD:-5}" ]; then
+            echo "⚠️ High compliance violations exceed threshold: $high_count"
+          fi
+        fi

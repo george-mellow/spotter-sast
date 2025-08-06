@@ -3,6 +3,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from 'url';
 import { exec } from "child_process";
 import { promisify } from "util";
 import axios from "axios";
@@ -12,12 +13,64 @@ import winston from "winston";
 import chokidar from "chokidar";
 import cron from "node-cron";
 import dotenv from "dotenv";
+import {
+  ComplianceDriftDetector,
+  MultiTenantComplianceManager,
+  ComplianceEvidenceCollector,
+  ComplianceRemediationEngine
+} from "./compliance/compliance-verification.js";
+import { registerComplianceMCPTools } from "./compliance/compliance-mcp-tools.js";
+
 
 dotenv.config();
 
 const execAsync = promisify(exec);
 
+// MCP stdout fix - redirect ALL console output to stderr
+const originalWrite = process.stdout.write;
+process.stdout.write = function(chunk, encoding, callback) {
+    if (typeof chunk === 'string' && chunk.includes('"jsonrpc"')) {
+        // Allow JSON-RPC messages through stdout
+        return originalWrite.call(process.stdout, chunk, encoding, callback);
+    }
+    // Redirect everything else to stderr
+    return process.stderr.write(chunk, encoding, callback);
+};
+
+// Also override console methods
+console.log = (...args) => process.stderr.write(args.join(' ') + '\n');
+console.info = (...args) => process.stderr.write(args.join(' ') + '\n');
+console.warn = (...args) => process.stderr.write(args.join(' ') + '\n');
+
 // Enhanced Logger
+// const logger = winston.createLogger({
+//   level: 'info',
+//   format: winston.format.combine(
+//     winston.format.timestamp(),
+//     winston.format.errors({ stack: true }),
+//     winston.format.json()
+//   ),
+//   transports: [
+//     new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
+//     new winston.transports.File({ filename: 'logs/security.log' }),
+//     new winston.transports.Console({ format: winston.format.simple() })
+//   ]
+// });
+
+// Get the current file's directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Create logs directory with absolute path
+const logDir = path.join(__dirname, 'logs');
+try {
+    if (!fs.existsSync(logDir)) {
+        fs.mkdirSync(logDir, { recursive: true });
+    }
+} catch (error) {
+    console.error('Could not create logs directory:', error.message);
+}
+
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(
@@ -26,11 +79,21 @@ const logger = winston.createLogger({
     winston.format.json()
   ),
   transports: [
-    new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'logs/security.log' }),
+    // Only add file transports if logs directory exists
+    ...(fs.existsSync(logDir) ? [
+      new winston.transports.File({ 
+        filename: path.join(logDir, 'error.log'), 
+        level: 'error' 
+      }),
+      new winston.transports.File({ 
+        filename: path.join(logDir, 'security.log') 
+      })
+    ] : []),
     new winston.transports.Console({ format: winston.format.simple() })
   ]
 });
+
+validateComplianceConfiguration();
 
 // Security Configuration
 const securityConfig = {
@@ -1332,6 +1395,55 @@ const continuousMonitor = new ContinuousMonitor(securityManager);
 const advancedReporting = new AdvancedReporting();
 const aiAutoFixer = new AIAutoFixer();
 
+// Initialize Enhanced Compliance Components
+const complianceDriftDetector = new ComplianceDriftDetector();
+const multiTenantManager = new MultiTenantComplianceManager();
+const evidenceCollector = new ComplianceEvidenceCollector();
+const remediationEngine = new ComplianceRemediationEngine();
+
+// Create compliance components object for MCP tools
+const complianceComponents = {
+  complianceDriftDetector,
+  multiTenantManager,
+  evidenceCollector,
+  remediationEngine
+};
+
+// Create required directories for compliance features
+const requiredDirs = [
+  '.././data/compliance-baselines',
+  '.././compliance-evidence', 
+  '.././incident-reports',
+  '.././config/tenants',
+  '.././logs'
+];
+
+requiredDirs.forEach(dir => {
+  try {
+    fs.mkdirSync(dir, { recursive: true });
+  } catch (error) {
+    // Directory might already exist, that's OK
+  }
+});
+
+// Enhanced logger for compliance operations
+const complianceLogger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [
+    // Only add file transport if logs directory exists
+    ...(fs.existsSync(logDir) ? [
+      new winston.transports.File({ 
+        filename: path.join(logDir, 'compliance.log') 
+      })
+    ] : []),
+    new winston.transports.Console({ format: winston.format.simple() })
+  ]
+});
+
 // Helper functions
 function shouldScanFile(filename) {
   const ext = path.extname(filename).toLowerCase();
@@ -1406,6 +1518,185 @@ function formatEnhancedSastReport(scanResults) {
   }
   
   return report;
+}
+
+function enhanceScanResultsWithCompliance(scanResults, requestedFrameworks = []) {
+  if (!scanResults.aggregatedFindings) return scanResults;
+
+  // Add compliance framework mapping to each finding
+  scanResults.aggregatedFindings = scanResults.aggregatedFindings.map(finding => {
+    const enhanced = { ...finding };
+    
+    // Map vulnerabilities to compliance frameworks
+    const complianceMapping = {
+      hardcoded_secrets: {
+        hipaa: ["164.312(a)(2)(i)"],
+        gdpr: ["Article 32"],
+        pci_dss: ["3.4", "8.2.1"]
+      },
+      weak_crypto: {
+        hipaa: ["164.312(a)(2)(iv)", "164.312(e)(2)(ii)"],
+        gdpr: ["Article 32"],
+        pci_dss: ["3.4", "4.1"]
+      },
+      sql_injection: {
+        hipaa: ["164.312(a)(1)", "164.312(c)(1)"],
+        gdpr: ["Article 32"],
+        pci_dss: ["6.5.1"]
+      }
+    };
+
+    enhanced.complianceMapping = complianceMapping[finding.type] || {};
+    
+    // Add compliance impact assessment
+    enhanced.complianceImpact = calculateComplianceImpact(finding, requestedFrameworks);
+    
+    return enhanced;
+  });
+
+  return scanResults;
+}
+
+function calculateComplianceImpact(finding, frameworks) {
+  const impactScores = {
+    Critical: 10,
+    High: 7,
+    Medium: 4,
+    Low: 1
+  };
+  
+  const baseScore = impactScores[finding.severity] || 1;
+  const frameworkMultiplier = frameworks.length > 0 ? frameworks.length * 0.2 : 1;
+  
+  return {
+    score: Math.round(baseScore * frameworkMultiplier),
+    level: baseScore >= 7 ? 'HIGH' : baseScore >= 4 ? 'MEDIUM' : 'LOW',
+    affectedFrameworks: frameworks.filter(f => 
+      finding.complianceMapping && finding.complianceMapping[f]
+    )
+  };
+}
+
+function formatEnhancedComplianceReport(scanResults, frameworks = []) {
+  let report = formatEnhancedSastReport(scanResults); // Your existing function
+  
+  if (frameworks.length > 0 && scanResults.aggregatedFindings.length > 0) {
+    report += `\n🏛️ Compliance Framework Analysis:\n`;
+    
+    frameworks.forEach(framework => {
+      const frameworkFindings = scanResults.aggregatedFindings.filter(f => 
+        f.complianceMapping && f.complianceMapping[framework]
+      );
+      
+      const frameworkStatus = frameworkFindings.length === 0 ? 'COMPLIANT' : 'NON-COMPLIANT';
+      const statusIcon = frameworkStatus === 'COMPLIANT' ? '✅' : '❌';
+      
+      report += `   ${statusIcon} ${framework.toUpperCase()}: ${frameworkStatus}\n`;
+      
+      if (frameworkFindings.length > 0) {
+        report += `      Violations: ${frameworkFindings.length}\n`;
+        frameworkFindings.slice(0, 3).forEach(finding => {
+          report += `      • ${finding.type} (${finding.severity}) - ${finding.file}:${finding.line}\n`;
+        });
+        if (frameworkFindings.length > 3) {
+          report += `      • ... and ${frameworkFindings.length - 3} more\n`;
+        }
+      }
+      report += '\n';
+    });
+    
+    // Add compliance recommendations
+    const criticalFindings = scanResults.aggregatedFindings.filter(f => f.severity === 'Critical');
+    if (criticalFindings.length > 0) {
+      report += `🚨 Immediate Compliance Actions Required:\n`;
+      report += `   • Fix ${criticalFindings.length} critical vulnerabilities within 24 hours\n`;
+      report += `   • Consider triggering automated remediation workflows\n`;
+      report += `   • Collect compliance evidence for audit trail\n\n`;
+    }
+  }
+  
+  return report;
+}
+
+// Compliance-aware scan function wrapper
+async function performComplianceAwareScan(filepath, frameworks = []) {
+  try {
+    // Perform the standard scan
+    let scanResults = await multiToolScanner.performMultiToolScan(filepath);
+    
+    // Enhance with compliance information
+    scanResults = enhanceScanResultsWithCompliance(scanResults, frameworks);
+    
+    // Add compliance status summary
+    if (frameworks.length > 0) {
+      scanResults.complianceFrameworks = frameworks;
+      scanResults.complianceSummary = {
+        requestedFrameworks: frameworks.length,
+        compliantFrameworks: 0,
+        nonCompliantFrameworks: 0,
+        overallStatus: 'PENDING'
+      };
+      
+      // Calculate compliance status for each framework
+      frameworks.forEach(framework => {
+        const frameworkViolations = scanResults.aggregatedFindings.filter(f =>
+          f.complianceMapping && f.complianceMapping[framework]
+        );
+        
+        if (frameworkViolations.length === 0) {
+          scanResults.complianceSummary.compliantFrameworks++;
+        } else {
+          scanResults.complianceSummary.nonCompliantFrameworks++;
+        }
+      });
+      
+      scanResults.complianceSummary.overallStatus = 
+        scanResults.complianceSummary.nonCompliantFrameworks === 0 ? 'COMPLIANT' : 'NON-COMPLIANT';
+    }
+    
+    return scanResults;
+  } catch (error) {
+    complianceLogger.error('Compliance-aware scan failed', { 
+      filepath, 
+      frameworks, 
+      error: error.message 
+    });
+    throw error;
+  }
+}
+
+// ENVIRONMENT CONFIGURATION VALIDATION
+function validateComplianceConfiguration() {
+  const requiredEnvVars = [
+    'ORGANIZATION_INDUSTRY',
+    'DEFAULT_COMPLIANCE_FRAMEWORKS'
+  ];
+  
+  const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
+  
+  if (missingVars.length > 0) {
+    logger.warn('Missing environment variables for enhanced compliance features', {
+      missing: missingVars,
+      suggestion: 'Consider using .env.example as a template'
+    });
+  }
+  
+  // Auto-enable frameworks based on industry
+  const industry = process.env.ORGANIZATION_INDUSTRY;
+  const autoFrameworks = {
+    healthcare: ['hipaa', 'nist'],
+    finance: ['pci_dss', 'sox', 'nist'],
+    ecommerce: ['pci_dss', 'gdpr', 'ccpa'],
+    government: ['fisma', 'fedramp', 'nist'],
+    general: ['owasp', 'nist']
+  };
+  
+  if (industry && autoFrameworks[industry]) {
+    logger.info('Auto-enabled compliance frameworks for industry', {
+      industry,
+      frameworks: autoFrameworks[industry]
+    });
+  }
 }
 
 // Initialize enhanced MCP server
@@ -1487,6 +1778,29 @@ server.tool(
 
       const report = formatEnhancedSastReport(scanResults);
       
+      // Collect compliance evidence if frameworks specified
+      if (policies && policies.length > 0 && scanResults.aggregatedFindings.length > 0) {
+        try {
+          const evidenceResult = await evidenceCollector.collectComplianceEvidence(
+            scanResults,
+            policies,
+            { 
+              collector: user?.email || 'anonymous',
+              notes: `Automated scan evidence collection for ${path.basename(filepath)}`,
+              scanType: 'enhanced_file_scan'
+            }
+          );
+          
+          // Add evidence information to the report
+          report += `\n🔒 Compliance Evidence Collected:\n`;
+          report += `   Evidence ID: ${evidenceResult.evidenceId}\n`;
+          report += `   Integrity Hash: ${evidenceResult.integrity.substring(0, 16)}...\n`;
+          
+        } catch (evidenceError) {
+          logger.warn('Evidence collection failed', { error: evidenceError.message });
+        }
+      }
+
       return { content: [{ type: "text", text: report }] };
 
     } catch (error) {
@@ -2083,9 +2397,23 @@ server.tool("auto_fix_file", "Legacy: Use ai_enhanced_auto_fix instead",
   }
 );
 
-// Start the enhanced server
-logger.info('🚀 Starting Enhanced SAST MCP Server v2.0.0');
-logger.info('📊 Features: Multi-tool SAST, AI fixes, continuous monitoring, compliance checking');
+// Register Enhanced Compliance MCP Tools
+registerComplianceMCPTools(server, complianceComponents);
+
+// Start the enhanced server (replace existing connect block)
+logger.info('🚀 Starting Enhanced SAST MCP Server v2.1.0');
+logger.info('📊 Enhanced Features: Compliance Drift Detection, Multi-Tenant Management');
+logger.info('🔒 Security Features: Evidence Collection, Automated Remediation');
+logger.info('📈 Analytics Features: Predictive Compliance, Advanced Reporting');
+
+// Log compliance components status
+logger.info('🏛️ Compliance Components Initialized', {
+  driftDetector: !!complianceDriftDetector,
+  multiTenant: !!multiTenantManager,
+  evidenceCollector: !!evidenceCollector,
+  remediationEngine: !!remediationEngine,
+  mcpTools: 'registered'
+});
 
 const transport = new StdioServerTransport();
 await server.connect(transport);

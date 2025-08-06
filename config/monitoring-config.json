@@ -1,0 +1,144 @@
+{
+  "monitoring_configuration": {
+    "alerting": {
+      "channels": {
+        "email": {
+          "enabled": true,
+          "smtp_config": {
+            "host": "${SMTP_HOST}",
+            "port": "${SMTP_PORT}",
+            "secure": true,
+            "auth": {
+              "user": "${SMTP_USER}",
+              "pass": "${SMTP_PASS}"
+            }
+          },
+          "recipients": {
+            "compliance_team": ["compliance@company.com"],
+            "security_team": ["security@company.com"],
+            "executives": ["ciso@company.com", "ceo@company.com"]
+          }
+        },
+        
+        "slack": {
+          "enabled": true,
+          "webhook_url": "${SLACK_WEBHOOK_URL}",
+          "channels": {
+            "compliance": "#compliance-alerts",
+            "security": "#security-incidents",
+            "general": "#general"
+          }
+        }
+      },
+      
+      "rules": [
+        {
+          "name": "critical_compliance_violation",
+          "condition": {
+            "severity": "critical",
+            "frameworks": ["hipaa", "pci_dss", "sox"]
+          },
+          "actions": [
+            {
+              "channel": "email",
+              "recipients": ["compliance_team", "executives"],
+              "immediate": true
+            },
+            {
+              "channel": "slack",
+              "mention": "@channel"
+            }
+          ]
+        },
+        
+        {
+          "name": "high_violation_threshold_breach",
+          "condition": {
+            "severity": "high",
+            "count": ">5",
+            "timeframe": "1h"
+          },
+          "actions": [
+            {
+              "channel": "email",
+              "recipients": ["compliance_team"]
+            }
+          ]
+        }
+      ]
+    },
+    
+    "metrics": {
+      "collection": {
+        "enabled": true,
+        "interval_seconds": 300,
+        "retention_days": 90
+      },
+      
+      "exporters": {
+        "json": {
+          "enabled": true,
+          "file_path": "logs/compliance-metrics.json",
+          "rotation": "daily"
+        }
+      }
+    },
+    
+    "continuous_monitoring": {
+      "schedules": {
+        "real_time": {
+          "enabled": true,
+          "file_watcher": true,
+          "scan_on_change": true,
+          "debounce_seconds": 5
+        },
+        
+        "daily_comprehensive": {
+          "enabled": true,
+          "schedule": "0 2 * * *",
+          "scan_type": "full",
+          "include_all_frameworks": true
+        },
+        
+        "weekly_deep_analysis": {
+          "enabled": true,
+          "schedule": "0 2 * * 0",
+          "scan_type": "comprehensive",
+          "include_trend_analysis": true,
+          "generate_executive_report": true
+        }
+      }
+    }
+  },
+  
+  "compliance_evidence": {
+    "collection": {
+      "enabled": true,
+      "automatic": true,
+      "evidence_types": [
+        "scan_results",
+        "configuration_snapshots",
+        "remediation_actions",
+        "audit_logs"
+      ]
+    },
+    
+    "retention": {
+      "default_retention_days": 2555,
+      "framework_specific": {
+        "hipaa": 2555,
+        "sox": 2555,
+        "pci_dss": 365,
+        "gdpr": 1095
+      }
+    },
+    
+    "storage": {
+      "location": "compliance-evidence/",
+      "encryption": {
+        "enabled": true,
+        "algorithm": "AES-256-GCM"
+      }
+    }
+  }
+}

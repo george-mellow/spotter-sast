@@ -1,0 +1,114 @@
+# Enhanced Makefile with Compliance Support
+# =========================================
+
+# Include the original Makefile content
+include Makefile
+
+# Compliance-specific targets
+.PHONY: compliance-setup compliance-scan compliance-report compliance-status compliance-clean
+
+# Compliance Setup
+compliance-setup: setup ## Setup compliance system
+	@echo "🛡️ Setting up compliance system..."
+	@chmod +x compliance.sh
+	@./compliance.sh setup
+	@echo "✅ Compliance system ready!"
+
+# Compliance Scanning
+compliance-scan: setup ## Run compliance scan
+	@echo "🔍 Running compliance scan..."
+	@./compliance.sh scan $(SCAN_PATH) "" $(REPORT_FORMAT)
+
+compliance-quick-scan: setup ## Run quick compliance scan
+	@echo "⚡ Running quick compliance scan..."
+	@./compliance.sh quick-scan $(SCAN_PATH)
+
+# Compliance Reporting
+compliance-report: setup ## Generate compliance report
+	@echo "📋 Generating compliance report..."
+	@./compliance.sh report $(SCAN_PATH) $(REPORT_FORMAT)
+
+# Compliance Status
+compliance-status: ## Show compliance system status
+	@echo "📊 Checking compliance status..."
+	@./compliance.sh status
+
+# Industry Configuration
+configure-healthcare: compliance-setup ## Configure for healthcare industry
+	@./compliance.sh configure-industry healthcare
+
+configure-finance: compliance-setup ## Configure for finance industry
+	@./compliance.sh configure-industry finance
+
+configure-ecommerce: compliance-setup ## Configure for ecommerce industry
+	@./compliance.sh configure-industry ecommerce
+
+configure-government: compliance-setup ## Configure for government industry
+	@./compliance.sh configure-industry government
+
+# Framework Management
+enable-hipaa: compliance-setup ## Enable HIPAA framework
+	@./compliance.sh enable hipaa
+
+enable-gdpr: compliance-setup ## Enable GDPR framework
+	@./compliance.sh enable gdpr
+
+enable-pci: compliance-setup ## Enable PCI DSS framework
+	@./compliance.sh enable pci_dss
+
+list-frameworks: compliance-setup ## List all compliance frameworks
+	@./compliance.sh list
+
+# Docker targets with compliance
+docker-compliance-scan: build ## Run compliance scan in Docker
+	@echo "🐳 Running compliance scan in Docker..."
+	@docker run --rm \
+		-v "$(SCAN_PATH):/scan-target:ro" \
+		-v "$(PWD)/compliance-reports:/app/reports" \
+		-v "$(PWD)/config:/app/config:ro" \
+		--env-file .env \
+		$(IMAGE_NAME):$(IMAGE_TAG) \
+		./compliance.sh scan /scan-target
+
+docker-compliance-report: build ## Generate compliance report in Docker
+	@echo "📋 Generating compliance report in Docker..."
+	@docker run --rm \
+		-v "$(SCAN_PATH):/scan-target:ro" \
+		-v "$(PWD)/compliance-reports:/app/reports" \
+		-v "$(PWD)/config:/app/config:ro" \
+		--env-file .env \
+		$(IMAGE_NAME):$(IMAGE_TAG) \
+		./compliance.sh report /scan-target $(REPORT_FORMAT)
+
+# Compliance Cleanup
+compliance-clean: ## Clean compliance reports and evidence
+	@echo "🧹 Cleaning compliance artifacts..."
+	@rm -rf compliance-reports/*
+	@rm -rf compliance-evidence/*
+	@rm -rf logs/compliance.log
+	@echo "✅ Compliance cleanup completed!"
+
+# Enhanced help with compliance targets
+help-compliance: ## Show compliance-specific commands
+	@echo "🛡️ Compliance Commands"
+	@echo "====================="
+	@echo ""
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]*compliance[a-zA-Z_-]*:.*?## / {printf "  \033[36m%-25s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*?## "} /^configure-[a-zA-Z_-]*:.*?## / {printf "  \033[36m%-25s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*?## "} /^enable-[a-zA-Z_-]*:.*?## / {printf "  \033[36m%-25s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@echo ""
+	@echo "Examples:"
+	@echo "  make compliance-setup                # Initialize compliance system"
+	@echo "  make configure-healthcare           # Setup for healthcare industry"
+	@echo "  make compliance-scan SCAN_PATH=./src # Run compliance scan"
+	@echo "  make compliance-report              # Generate HTML report"
+	@echo "  make docker-compliance-scan         # Run scan in Docker"
+	@echo ""
+
+# Override the original help to include compliance
+help: help-compliance ## Show help message with compliance commands
+	@echo "🔍 Spotter-SAST Commands (Enhanced with Compliance)"
+	@echo "=================================================="
+	@echo ""
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | grep -v compliance | grep -v configure- | grep -v enable-
+	@echo ""

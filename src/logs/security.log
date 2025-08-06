@@ -1,0 +1,70 @@
+{"level":"warn","message":"Missing environment variables for enhanced compliance features","missing":["ORGANIZATION_INDUSTRY","DEFAULT_COMPLIANCE_FRAMEWORKS"],"suggestion":"Consider using .env.enhanced.example as a template","timestamp":"2025-08-06T18:46:18.525Z"}
+{"level":"info","message":"🚀 Starting Enhanced SAST MCP Server v2.1.0","timestamp":"2025-08-06T18:46:18.532Z"}
+{"level":"info","message":"📊 Enhanced Features: Compliance Drift Detection, Multi-Tenant Management","timestamp":"2025-08-06T18:46:18.532Z"}
+{"level":"info","message":"🔒 Security Features: Evidence Collection, Automated Remediation","timestamp":"2025-08-06T18:46:18.532Z"}
+{"level":"info","message":"📈 Analytics Features: Predictive Compliance, Advanced Reporting","timestamp":"2025-08-06T18:46:18.533Z"}
+{"driftDetector":true,"evidenceCollector":true,"level":"info","mcpTools":"registered","message":"🏛️ Compliance Components Initialized","multiTenant":true,"remediationEngine":true,"timestamp":"2025-08-06T18:46:18.533Z"}
+{"level":"warn","message":"SAST tool not available: semgrep","timestamp":"2025-08-06T18:46:18.539Z"}
+{"level":"warn","message":"SAST tool not available: bandit","timestamp":"2025-08-06T18:46:18.546Z"}
+{"level":"warn","message":"SAST tool not available: eslint","timestamp":"2025-08-06T18:46:18.551Z"}
+{"level":"warn","message":"SAST tool not available: njsscan","timestamp":"2025-08-06T18:46:18.554Z"}
+{"level":"warn","message":"Missing environment variables for enhanced compliance features","missing":["ORGANIZATION_INDUSTRY","DEFAULT_COMPLIANCE_FRAMEWORKS"],"suggestion":"Consider using .env.enhanced.example as a template","timestamp":"2025-08-06T19:48:03.918Z"}
+{"level":"info","message":"🚀 Starting Enhanced SAST MCP Server v2.1.0","timestamp":"2025-08-06T19:48:03.924Z"}
+{"level":"info","message":"📊 Enhanced Features: Compliance Drift Detection, Multi-Tenant Management","timestamp":"2025-08-06T19:48:03.925Z"}
+{"level":"info","message":"🔒 Security Features: Evidence Collection, Automated Remediation","timestamp":"2025-08-06T19:48:03.925Z"}
+{"level":"info","message":"📈 Analytics Features: Predictive Compliance, Advanced Reporting","timestamp":"2025-08-06T19:48:03.925Z"}
+{"driftDetector":true,"evidenceCollector":true,"level":"info","mcpTools":"registered","message":"🏛️ Compliance Components Initialized","multiTenant":true,"remediationEngine":true,"timestamp":"2025-08-06T19:48:03.925Z"}
+{"level":"warn","message":"SAST tool not available: semgrep","timestamp":"2025-08-06T19:48:03.933Z"}
+{"level":"warn","message":"SAST tool not available: bandit","timestamp":"2025-08-06T19:48:03.939Z"}
+{"level":"info","message":"SAST tool detected: eslint","timestamp":"2025-08-06T19:48:04.115Z"}
+{"level":"warn","message":"SAST tool not available: njsscan","timestamp":"2025-08-06T19:48:04.120Z"}
+{"level":"warn","message":"Missing environment variables for enhanced compliance features","missing":["ORGANIZATION_INDUSTRY","DEFAULT_COMPLIANCE_FRAMEWORKS"],"suggestion":"Consider using .env.enhanced.example as a template","timestamp":"2025-08-06T19:50:01.198Z"}
+{"level":"info","message":"🚀 Starting Enhanced SAST MCP Server v2.1.0","timestamp":"2025-08-06T19:50:01.206Z"}
+{"level":"info","message":"📊 Enhanced Features: Compliance Drift Detection, Multi-Tenant Management","timestamp":"2025-08-06T19:50:01.206Z"}
+{"level":"info","message":"🔒 Security Features: Evidence Collection, Automated Remediation","timestamp":"2025-08-06T19:50:01.206Z"}
+{"level":"info","message":"📈 Analytics Features: Predictive Compliance, Advanced Reporting","timestamp":"2025-08-06T19:50:01.207Z"}
+{"driftDetector":true,"evidenceCollector":true,"level":"info","mcpTools":"registered","message":"🏛️ Compliance Components Initialized","multiTenant":true,"remediationEngine":true,"timestamp":"2025-08-06T19:50:01.207Z"}
+{"level":"warn","message":"SAST tool not available: semgrep","timestamp":"2025-08-06T19:50:01.211Z"}
+{"level":"warn","message":"SAST tool not available: bandit","timestamp":"2025-08-06T19:50:01.215Z"}
+{"level":"info","message":"SAST tool detected: eslint","timestamp":"2025-08-06T19:50:01.386Z"}
+{"level":"warn","message":"SAST tool not available: njsscan","timestamp":"2025-08-06T19:50:01.390Z"}
+{"level":"warn","message":"Missing environment variables for enhanced compliance features","missing":["ORGANIZATION_INDUSTRY","DEFAULT_COMPLIANCE_FRAMEWORKS"],"suggestion":"Consider using .env.enhanced.example as a template","timestamp":"2025-08-06T19:50:31.547Z"}
+{"level":"info","message":"🚀 Starting Enhanced SAST MCP Server v2.1.0","timestamp":"2025-08-06T19:50:31.553Z"}
+{"level":"info","message":"📊 Enhanced Features: Compliance Drift Detection, Multi-Tenant Management","timestamp":"2025-08-06T19:50:31.553Z"}
+{"level":"info","message":"🔒 Security Features: Evidence Collection, Automated Remediation","timestamp":"2025-08-06T19:50:31.553Z"}
+{"level":"info","message":"📈 Analytics Features: Predictive Compliance, Advanced Reporting","timestamp":"2025-08-06T19:50:31.553Z"}
+{"driftDetector":true,"evidenceCollector":true,"level":"info","mcpTools":"registered","message":"🏛️ Compliance Components Initialized","multiTenant":true,"remediationEngine":true,"timestamp":"2025-08-06T19:50:31.553Z"}
+{"level":"warn","message":"SAST tool not available: semgrep","timestamp":"2025-08-06T19:50:31.556Z"}
+{"level":"warn","message":"SAST tool not available: bandit","timestamp":"2025-08-06T19:50:31.560Z"}
+{"level":"info","message":"SAST tool detected: eslint","timestamp":"2025-08-06T19:50:31.729Z"}
+{"level":"warn","message":"SAST tool not available: njsscan","timestamp":"2025-08-06T19:50:31.734Z"}
+{"level":"warn","message":"Missing environment variables for enhanced compliance features","missing":["ORGANIZATION_INDUSTRY","DEFAULT_COMPLIANCE_FRAMEWORKS"],"suggestion":"Consider using .env.enhanced.example as a template","timestamp":"2025-08-06T19:59:29.544Z"}
+{"level":"info","message":"🚀 Starting Enhanced SAST MCP Server v2.1.0","timestamp":"2025-08-06T19:59:29.550Z"}
+{"level":"info","message":"📊 Enhanced Features: Compliance Drift Detection, Multi-Tenant Management","timestamp":"2025-08-06T19:59:29.551Z"}
+{"level":"info","message":"🔒 Security Features: Evidence Collection, Automated Remediation","timestamp":"2025-08-06T19:59:29.551Z"}
+{"level":"info","message":"📈 Analytics Features: Predictive Compliance, Advanced Reporting","timestamp":"2025-08-06T19:59:29.551Z"}
+{"driftDetector":true,"evidenceCollector":true,"level":"info","mcpTools":"registered","message":"🏛️ Compliance Components Initialized","multiTenant":true,"remediationEngine":true,"timestamp":"2025-08-06T19:59:29.551Z"}
+{"level":"warn","message":"SAST tool not available: semgrep","timestamp":"2025-08-06T19:59:29.554Z"}
+{"level":"warn","message":"SAST tool not available: bandit","timestamp":"2025-08-06T19:59:29.559Z"}
+{"level":"info","message":"SAST tool detected: eslint","timestamp":"2025-08-06T19:59:29.717Z"}
+{"level":"warn","message":"SAST tool not available: njsscan","timestamp":"2025-08-06T19:59:29.721Z"}
+{"level":"warn","message":"Missing environment variables for enhanced compliance features","missing":["ORGANIZATION_INDUSTRY","DEFAULT_COMPLIANCE_FRAMEWORKS"],"suggestion":"Consider using .env.enhanced.example as a template","timestamp":"2025-08-06T19:59:45.279Z"}
+{"level":"info","message":"🚀 Starting Enhanced SAST MCP Server v2.1.0","timestamp":"2025-08-06T19:59:45.285Z"}
+{"level":"info","message":"📊 Enhanced Features: Compliance Drift Detection, Multi-Tenant Management","timestamp":"2025-08-06T19:59:45.286Z"}
+{"level":"info","message":"🔒 Security Features: Evidence Collection, Automated Remediation","timestamp":"2025-08-06T19:59:45.286Z"}
+{"level":"info","message":"📈 Analytics Features: Predictive Compliance, Advanced Reporting","timestamp":"2025-08-06T19:59:45.286Z"}
+{"driftDetector":true,"evidenceCollector":true,"level":"info","mcpTools":"registered","message":"🏛️ Compliance Components Initialized","multiTenant":true,"remediationEngine":true,"timestamp":"2025-08-06T19:59:45.286Z"}
+{"level":"warn","message":"SAST tool not available: semgrep","timestamp":"2025-08-06T19:59:45.291Z"}
+{"level":"warn","message":"SAST tool not available: bandit","timestamp":"2025-08-06T19:59:45.295Z"}
+{"level":"warn","message":"SAST tool not available: eslint","timestamp":"2025-08-06T19:59:45.299Z"}
+{"level":"warn","message":"SAST tool not available: njsscan","timestamp":"2025-08-06T19:59:45.303Z"}
+{"level":"warn","message":"Missing environment variables for enhanced compliance features","missing":["ORGANIZATION_INDUSTRY","DEFAULT_COMPLIANCE_FRAMEWORKS"],"suggestion":"Consider using .env.example as a template","timestamp":"2025-08-06T20:00:50.110Z"}
+{"level":"info","message":"🚀 Starting Enhanced SAST MCP Server v2.1.0","timestamp":"2025-08-06T20:00:50.116Z"}
+{"level":"info","message":"📊 Enhanced Features: Compliance Drift Detection, Multi-Tenant Management","timestamp":"2025-08-06T20:00:50.116Z"}
+{"level":"info","message":"🔒 Security Features: Evidence Collection, Automated Remediation","timestamp":"2025-08-06T20:00:50.117Z"}
+{"level":"info","message":"📈 Analytics Features: Predictive Compliance, Advanced Reporting","timestamp":"2025-08-06T20:00:50.117Z"}
+{"driftDetector":true,"evidenceCollector":true,"level":"info","mcpTools":"registered","message":"🏛️ Compliance Components Initialized","multiTenant":true,"remediationEngine":true,"timestamp":"2025-08-06T20:00:50.117Z"}
+{"level":"warn","message":"SAST tool not available: semgrep","timestamp":"2025-08-06T20:00:50.120Z"}
+{"level":"warn","message":"SAST tool not available: bandit","timestamp":"2025-08-06T20:00:50.126Z"}
+{"level":"info","message":"SAST tool detected: eslint","timestamp":"2025-08-06T20:00:50.306Z"}
+{"level":"warn","message":"SAST tool not available: njsscan","timestamp":"2025-08-06T20:00:50.310Z"}

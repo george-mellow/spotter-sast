@@ -1,0 +1,275 @@
+# Spotter-SAST Compliance Ignore File
+# ===================================
+# Files and patterns to exclude from compliance scanning
+# Similar to .gitignore syntax
+
+# Development and Testing
+test/**
+tests/**
+spec/**
+__tests__/**
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+**/test-data/**
+**/mock-data/**
+**/fixtures/**
+**/stubs/**
+
+# Third-party Dependencies
+node_modules/**
+vendor/**
+third_party/**
+external/**
+lib/**
+libs/**
+packages/**
+
+# Build and Distribution
+dist/**
+build/**
+out/**
+target/**
+bin/**
+obj/**
+*.min.js
+*.min.css
+bundle.js
+*.bundle.*
+
+# Documentation and Examples
+docs/**
+documentation/**
+examples/**
+samples/**
+demo/**
+*.md
+*.txt
+*.pdf
+CHANGELOG*
+LICENSE*
+README*
+
+# Configuration and Environment
+.env*
+.config
+config/*.example.*
+docker-compose*.yml
+Dockerfile*
+*.dockerfile
+.dockerignore
+.gitignore
+.eslintrc*
+.prettierrc*
+tsconfig.json
+package-lock.json
+yarn.lock
+
+# IDE and Editor Files
+.vscode/**
+.idea/**
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs and Temporary Files
+logs/**
+*.log
+tmp/**
+temp/**
+*.tmp
+*.cache
+.cache/**
+
+# Framework Specific Exclusions
+# React
+public/**
+src/serviceWorker.js
+src/reportWebVitals.js
+
+# Angular
+src/polyfills.ts
+src/test.ts
+e2e/**
+
+# Vue
+src/registerServiceWorker.js
+
+# Database and Migration Files
+migrations/**
+seeds/**
+*.sql
+*.db
+*.sqlite
+
+# Generated Files
+generated/**
+auto-generated/**
+*.generated.*
+protobuf/**
+*.pb.go
+*.pb.js
+
+# Compliance-Specific Exclusions
+
+# Test PHI/PII Data (not real data)
+**/test-phi/**
+**/sample-pii/**
+**/fake-data/**
+**/synthetic-data/**
+
+# Development Environment Specific
+# These patterns indicate development-only code
+**/dev-only/**
+**/development/**
+# Files with dev indicators
+*.dev.*
+*.development.*
+
+# Test Environment Specific  
+**/staging/**
+**/test-env/**
+*.staging.*
+*.test.*
+
+# Mock Services and Stubs
+**/mocks/**
+**/stubs/**
+**/doubles/**
+mock-*.js
+stub-*.js
+
+# Compliance Framework Exclusions by Environment
+# Development Environment - Exclude strict government frameworks
+@development:fisma,fedramp
+
+# Test Environment - Exclude production-only frameworks  
+@test:sox
+
+# Staging Environment - Exclude some regulatory frameworks
+@staging:fisma,fedramp
+
+# File Type Exclusions for Specific Frameworks
+
+# Exclude image files from most compliance scans
+*.jpg:hipaa,gdpr,pci_dss
+*.png:hipaa,gdpr,pci_dss
+*.gif:hipaa,gdpr,pci_dss
+*.svg:hipaa,gdpr,pci_dss
+
+# Exclude font files
+*.woff:all
+*.woff2:all
+*.ttf:all
+*.eot:all
+
+# Exclude compiled/minified files
+*.min.js:all
+*.min.css:all
+
+# Language-Specific Exclusions
+
+# Python
+__pycache__/**
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+.pytest_cache/**
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+target/**
+.gradle/**
+
+# Go
+*.exe
+*.dll
+*.so
+*.dylib
+vendor/**
+
+# Rust
+target/**
+Cargo.lock
+
+# C/C++  
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.a
+*.lib
+
+# Pattern-Based Exclusions
+
+# Comments and documentation within code
+# Exclude single-line comments that might contain test data
+#.*test.*data
+#.*example.*phi
+#.*demo.*information
+
+# Exclude specific variable names that are clearly test data
+test_patient_id
+demo_ssn
+sample_credit_card
+fake_api_key
+mock_password
+
+# URLs and Endpoints - Development/Test
+http://localhost*
+https://test.*
+https://dev.*
+https://staging.*
+*.example.com
+*.test.com
+
+# Compliance-Specific Patterns
+
+# HIPAA - Exclude test PHI patterns
+test-patient-*
+demo-medical-*
+sample-phi-*
+fake-health-*
+
+# PCI DSS - Exclude test card numbers (Luhn invalid)
+4000000000000000
+4111111111111111
+5555555555554444
+
+# GDPR - Exclude test personal data
+test@example.com
+demo.user@*
+sample.customer@*
+
+# Custom Organization Exclusions
+# Add your organization-specific exclusions here
+
+# Legacy Code (if needed)
+legacy/**
+deprecated/**
+old/**
+archive/**
+
+# Vendor-Specific
+aws-sdk/**
+google-cloud/**
+azure-sdk/**
+stripe-sdk/**
+
+# Framework and Library Exclusions
+jquery*.js
+bootstrap*.css
+react*.js
+angular*.js
+vue*.js
+
+# End of .complianceignore

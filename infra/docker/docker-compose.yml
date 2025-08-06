@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  spotter-sast:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: spotter-sast
+    restart: unless-stopped
+    
+    # Environment variables
+    environment:
+      - NODE_ENV=production
+      - JWT_SECRET=${JWT_SECRET:-secure-jwt-secret-change-me}
+      - ENABLE_RBAC=${ENABLE_RBAC:-false}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - AUDIT_LOGGING=${AUDIT_LOGGING:-true}
+      - DEFAULT_SCAN_SCHEDULE=0 */6 * * *
+      - ALERT_THRESHOLD_CRITICAL=0
+      - ALERT_THRESHOLD_HIGH=5
+    
+    # Volume mounts
+    volumes:
+      # Mount your source code for scanning
+      - ${SCAN_TARGET:-./}:/scan-target:ro
+      # Persistent logs
+      - ./docker-logs:/app/logs
+      # Persistent reports
+      - ./docker-reports:/app/reports
+      # Optional: custom configuration
+      - ./config:/app/config:ro
+      # Optional: custom environment file
+      - ./.env:/app/.env:ro
+    
+    # Port mapping (for future HTTP endpoints)
+    ports:
+      - "${PORT:-3000}:3000"
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+          cpus: '0.25'
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "node", "-e", "console.error('Health check passed')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    
+    # Network
+    networks:
+      - spotter-network
+
+  # Optional: Add a web dashboard service (future enhancement)
+  # spotter-dashboard:
+  #   image: nginx:alpine
+  #   container_name: spotter-dashboard
+  #   ports:
+  #     - "8080:80"
+  #   volumes:
+  #     - ./docker-reports:/usr/share/nginx/html/reports:ro
+  #   depends_on:
+  #     - spotter-sast
+  #   networks:
+  #     - spotter-network
+
+networks:
+  spotter-network:
+    driver: bridge
+
+volumes:
+  spotter-logs:
+    driver: local
+  spotter-reports:
+    driver: local

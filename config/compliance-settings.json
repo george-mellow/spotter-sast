@@ -1,0 +1,273 @@
+{
+  "compliance_configuration": {
+    "organization": {
+      "name": "Your Organization Name",
+      "industry": "general",
+      "size": "medium",
+      "locations": ["US", "EU"],
+      "data_types": ["customer_data", "financial_data", "health_data", "personal_data"]
+    },
+    
+    "active_frameworks": {
+      "primary": ["owasp", "nist_csf"],
+      "secondary": ["iso27001"],
+      "industry_specific": [],
+      "regulatory": []
+    },
+    
+    "risk_tolerance": {
+      "overall_level": "medium",
+      "critical_threshold": 0,
+      "high_threshold": 5,
+      "medium_threshold": 20,
+      "low_threshold": 50,
+      "auto_remediation": {
+        "enabled": false,
+        "max_severity": "medium",
+        "require_approval": true
+      }
+    },
+    
+    "notification_settings": {
+      "compliance_violations": {
+        "enabled": true,
+        "immediate_notify_on": ["critical", "high"],
+        "daily_summary": true,
+        "weekly_report": true,
+        "channels": ["email", "slack"]
+      },
+      "framework_updates": {
+        "enabled": true,
+        "auto_update_definitions": false,
+        "notify_on_changes": true
+      },
+      "audit_events": {
+        "enabled": true,
+        "include_passed_scans": false,
+        "include_configuration_changes": true
+      }
+    },
+    
+    "reporting": {
+      "default_format": "html",
+      "include_executive_summary": true,
+      "include_technical_details": true,
+      "include_remediation_timeline": true,
+      "include_cost_analysis": false,
+      "retention_period_days": 365,
+      "auto_generate": {
+        "daily": false,
+        "weekly": true,
+        "monthly": true,
+        "quarterly": true
+      }
+    },
+    
+    "integration": {
+      "ticketing_system": {
+        "enabled": false,
+        "system": "jira",
+        "auto_create_tickets": false,
+        "severity_mapping": {
+          "critical": "blocker",
+          "high": "critical",
+          "medium": "major",
+          "low": "minor"
+        }
+      },
+      "cicd_pipeline": {
+        "enabled": true,
+        "fail_build_on": ["critical"],
+        "warn_build_on": ["high", "medium"],
+        "gates": {
+          "pre_commit": true,
+          "pull_request": true,
+          "pre_deployment": true
+        }
+      },
+      "monitoring": {
+        "enabled": true,
+        "metrics_endpoint": "/metrics",
+        "prometheus_integration": false,
+        "custom_dashboards": []
+      }
+    },
+    
+    "custom_rules": {
+      "organization_specific": [
+        {
+          "name": "internal_api_security",
+          "description": "Internal API security requirements",
+          "patterns": [
+            "/internal-api.*without.*authentication/gi"
+          ],
+          "severity": "high",
+          "compliance_mapping": {
+            "internal_security_policy": ["API-001", "API-002"]
+          }
+        }
+      ],
+      "industry_patterns": [],
+      "regulatory_requirements": []
+    },
+    
+    "exclusions": {
+      "files": [
+        "node_modules/**",
+        "test/**",
+        "*.test.js",
+        "vendor/**"
+      ],
+      "patterns": [
+        "development_only",
+        "test_data"
+      ],
+      "frameworks": {
+        "development_environment": ["fisma", "fedramp"],
+        "test_environment": ["sox"]
+      }
+    },
+    
+    "compliance_monitoring": {
+      "continuous_assessment": {
+        "enabled": true,
+        "schedule": "0 */6 * * *",
+        "full_scan_schedule": "0 2 * * 0"
+      },
+      "baseline_comparison": {
+        "enabled": true,
+        "track_improvements": true,
+        "track_regressions": true,
+        "alert_on_regression": true
+      },
+      "trend_analysis": {
+        "enabled": true,
+        "period_days": 30,
+        "include_predictions": false
+      }
+    },
+    
+    "remediation": {
+      "prioritization": {
+        "method": "risk_based",
+        "factors": {
+          "severity_weight": 0.4,
+          "compliance_impact_weight": 0.3,
+          "business_impact_weight": 0.2,
+          "effort_weight": 0.1
+        }
+      },
+      "sla": {
+        "critical": "24_hours",
+        "high": "7_days", 
+        "medium": "30_days",
+        "low": "90_days"
+      },
+      "auto_fix": {
+        "enabled": false,
+        "approved_patterns": ["debug_code", "weak_crypto"],
+        "require_review": true,
+        "create_pull_request": true
+      }
+    }
+  },
+  
+  "framework_customization": {
+    "hipaa": {
+      "custom_controls": [
+        {
+          "control_id": "164.312.custom",
+          "name": "Organization Specific PHI Protection",
+          "requirements": ["phi_custom_encryption", "phi_access_logging"],
+          "severity_override": "critical"
+        }
+      ],
+      "threshold_overrides": {
+        "critical": 0,
+        "high": 0,
+        "medium": 2
+      }
+    },
+    
+    "gdpr": {
+      "data_subject_rights": {
+        "right_to_be_forgotten": {
+          "implementation_required": true,
+          "automated_deletion": true,
+          "retention_period_months": 24
+        },
+        "data_portability": {
+          "export_formats": ["json", "csv", "xml"],
+          "automated_export": true
+        }
+      },
+      "consent_management": {
+        "granular_consent": true,
+        "consent_withdrawal": true,
+        "consent_audit_trail": true
+      }
+    },
+    
+    "pci_dss": {
+      "cardholder_data_environment": {
+        "network_segmentation": true,
+        "encryption_requirements": "aes_256",
+        "key_management": "hsm_required"
+      },
+      "additional_requirements": [
+        "multi_factor_authentication",
+        "quarterly_vulnerability_scans",
+        "annual_penetration_testing"
+      ]
+    },
+    
+    "iso27001": {
+      "risk_assessment": {
+        "methodology": "iso27005",
+        "frequency": "annual",
+        "scope": "organization_wide"
+      },
+      "information_classification": {
+        "levels": ["public", "internal", "confidential", "restricted"],
+        "handling_requirements": true
+      }
+    }
+  },
+  
+  "audit_configuration": {
+    "audit_logging": {
+      "enabled": true,
+      "log_level": "info",
+      "retention_days": 90,
+      "events": [
+        "compliance_scan_started",
+        "compliance_scan_completed", 
+        "framework_enabled",
+        "framework_disabled",
+        "threshold_breach",
+        "remediation_applied",
+        "configuration_changed"
+      ]
+    },
+    
+    "compliance_evidence": {
+      "collect_evidence": true,
+      "evidence_retention_days": 2555,
+      "evidence_types": [
+        "scan_results",
+        "remediation_actions",
+        "configuration_snapshots",
+        "approval_records"
+      ]
+    },
+    
+    "regulatory_reporting": {
+      "auto_generate_reports": false,
+      "report_templates": {
+        "sox_quarterly": true,
+        "hipaa_annual": false,
+        "gdpr_breach_notification": true
+      }
+    }
+  }
+}

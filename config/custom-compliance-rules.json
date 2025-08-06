@@ -1,0 +1,294 @@
+{
+  "custom_compliance_rules": {
+    "healthcare_specific": [
+      {
+        "rule_id": "PHI_001",
+        "name": "PHI in Database Connections",
+        "description": "Detect potential PHI exposure in database connection strings",
+        "patterns": [
+          "/patient.*database.*connection/gi",
+          "/medical.*record.*connection/gi",
+          "/health.*info.*db/gi"
+        ],
+        "severity": "critical",
+        "compliance_frameworks": ["hipaa"],
+        "remediation": "Use environment variables for database connections with PHI",
+        "compliance_mapping": {
+          "hipaa": ["164.312(a)(2)(i)", "164.308(a)(4)(i)"]
+        }
+      },
+      {
+        "rule_id": "PHI_002", 
+        "name": "Unencrypted PHI Storage",
+        "description": "Detect potential unencrypted PHI storage",
+        "patterns": [
+          "/patient.*data.*\.json/gi",
+          "/medical.*records.*plaintext/gi",
+          "/phi.*unencrypted/gi"
+        ],
+        "severity": "critical",
+        "compliance_frameworks": ["hipaa"],
+        "remediation": "Encrypt all PHI at rest using AES-256 or equivalent",
+        "compliance_mapping": {
+          "hipaa": ["164.312(a)(2)(iv)"]
+        }
+      }
+    ],
+
+    "financial_specific": [
+      {
+        "rule_id": "PCI_001",
+        "name": "Credit Card Data Exposure",
+        "description": "Detect potential credit card data exposure in code",
+        "patterns": [
+          "/\\b4[0-9]{12}(?:[0-9]{3})?\\b/g",
+          "/\\b5[1-5][0-9]{14}\\b/g",
+          "/\\b3[47][0-9]{13}\\b/g",
+          "/credit.*card.*number/gi",
+          "/cvv.*code/gi"
+        ],
+        "severity": "critical",
+        "compliance_frameworks": ["pci_dss"],
+        "remediation": "Never store credit card data in code; use tokenization",
+        "compliance_mapping": {
+          "pci_dss": ["3.4", "3.4.1"]
+        }
+      },
+      {
+        "rule_id": "SOX_001",
+        "name": "Financial Data Integrity",
+        "description": "Detect potential financial data integrity issues",
+        "patterns": [
+          "/financial.*data.*modify.*without.*audit/gi",
+          "/accounting.*entry.*no.*trail/gi",
+          "/revenue.*calculation.*bypass/gi"
+        ],
+        "severity": "high",
+        "compliance_frameworks": ["sox"],
+        "remediation": "Implement audit trails for all financial data modifications",
+        "compliance_mapping": {
+          "sox": ["Section 404"]
+        }
+      }
+    ],
+
+    "privacy_specific": [
+      {
+        "rule_id": "GDPR_001",
+        "name": "Personal Data Collection Without Consent",
+        "description": "Detect potential personal data collection without proper consent mechanisms",
+        "patterns": [
+          "/collect.*email.*without.*consent/gi",
+          "/track.*user.*no.*permission/gi",
+          "/personal.*data.*automatic.*collection/gi"
+        ],
+        "severity": "high",
+        "compliance_frameworks": ["gdpr", "ccpa"],
+        "remediation": "Implement consent management before collecting personal data",
+        "compliance_mapping": {
+          "gdpr": ["Article 7", "Article 6"],
+          "ccpa": ["1798.100"]
+        }
+      },
+      {
+        "rule_id": "GDPR_002",
+        "name": "Data Retention Without Policy",
+        "description": "Detect data retention without proper policy implementation",
+        "patterns": [
+          "/store.*personal.*data.*indefinitely/gi",
+          "/no.*deletion.*policy/gi",
+          "/permanent.*user.*data/gi"
+        ],
+        "severity": "medium",
+        "compliance_frameworks": ["gdpr", "ccpa"],
+        "remediation": "Implement data retention policies and automated deletion",
+        "compliance_mapping": {
+          "gdpr": ["Article 5", "Article 17"],
+          "ccpa": ["1798.105"]
+        }
+      }
+    ],
+
+    "government_specific": [
+      {
+        "rule_id": "FISMA_001",
+        "name": "Unencrypted Government Data Transmission",
+        "description": "Detect unencrypted transmission of government data",
+        "patterns": [
+          "/government.*data.*http:/gi",
+          "/classified.*info.*unencrypted/gi",
+          "/federal.*data.*plain.*text/gi"
+        ],
+        "severity": "critical",
+        "compliance_frameworks": ["fisma", "fedramp"],
+        "remediation": "Use FIPS 140-2 validated encryption for all government data",
+        "compliance_mapping": {
+          "fisma": ["SC-8", "SC-13"],
+          "fedramp": ["SC-8", "SC-13"]
+        }
+      }
+    ],
+
+    "general_security": [
+      {
+        "rule_id": "SEC_001",
+        "name": "Deprecated Cryptographic Functions",
+        "description": "Detect usage of deprecated cryptographic functions",
+        "patterns": [
+          "/crypto\.createHash\\(['\"](md5|sha1)['\"]\\)/gi",
+          "/MessageDigest\\.getInstance\\(['\"](MD5|SHA1)['\"]\\)/gi",
+          "/hashlib\\.(md5|sha1)\\(/gi"
+        ],
+        "severity": "high",
+        "compliance_frameworks": ["nist_csf", "iso27001"],
+        "remediation": "Replace with SHA-256, SHA-3, or other approved algorithms",
+        "compliance_mapping": {
+          "nist_csf": ["PR.DS-1"],
+          "iso27001": ["A.10.1.1"]
+        }
+      },
+      {
+        "rule_id": "SEC_002",
+        "name": "Insecure Random Number Generation",
+        "description": "Detect usage of insecure random number generators",
+        "patterns": [
+          "/Math\\.random\\(\\)/gi",
+          "/Random\\(\\)\\.next/gi",
+          "/rand\\(\\)/gi",
+          "/mt_rand\\(/gi"
+        ],
+        "severity": "medium",
+        "compliance_frameworks": ["nist_csf", "iso27001", "pci_dss"],
+        "remediation": "Use cryptographically secure random number generators",
+        "compliance_mapping": {
+          "nist_csf": ["PR.DS-1"],
+          "iso27001": ["A.10.1.1"],
+          "pci_dss": ["3.6"]
+        }
+      }
+    ],
+
+    "cloud_security": [
+      {
+        "rule_id": "CLOUD_001",
+        "name": "Hardcoded Cloud Credentials",
+        "description": "Detect hardcoded cloud service credentials",
+        "patterns": [
+          "/AKIA[0-9A-Z]{16}/g",
+          "/aws_access_key_id.*=.*['\"][A-Z0-9]{20}['\"]/gi",
+          "/aws_secret_access_key.*=.*['\"][A-Za-z0-9+/]{40}['\"]/gi",
+          "/gcp.*service.*account.*key/gi",
+          "/azure.*client.*secret/gi"
+        ],
+        "severity": "critical",
+        "compliance_frameworks": ["nist_csf", "iso27001", "fedramp"],
+        "remediation": "Use IAM roles, managed identities, or secure credential stores",
+        "compliance_mapping": {
+          "nist_csf": ["PR.AC-1"],
+          "iso27001": ["A.9.4.3"],
+          "fedramp": ["IA-5"]
+        }
+      }
+    ]
+  },
+
+  "industry_patterns": {
+    "healthcare": {
+      "phi_indicators": [
+        "/patient.*id/gi",
+        "/medical.*record.*number/gi",
+        "/ssn|social.*security/gi",
+        "/date.*of.*birth/gi",
+        "/health.*insurance/gi",
+        "/diagnosis.*code/gi"
+      ],
+      "excluded_patterns": [
+        "/test.*patient/gi",
+        "/demo.*data/gi",
+        "/sample.*phi/gi"
+      ]
+    },
+    "finance": {
+      "sensitive_financial_data": [
+        "/account.*number/gi",
+        "/routing.*number/gi",
+        "/credit.*card/gi",
+        "/financial.*account/gi",
+        "/tax.*id/gi"
+      ],
+      "excluded_patterns": [
+        "/test.*account/gi",
+        "/demo.*financial/gi",
+        "/sandbox.*payment/gi"
+      ]
+    },
+    "ecommerce": {
+      "customer_data": [
+        "/customer.*email/gi",
+        "/billing.*address/gi",
+        "/payment.*method/gi",
+        "/order.*history/gi"
+      ],
+      "excluded_patterns": [
+        "/test.*customer/gi",
+        "/demo.*order/gi"
+      ]
+    }
+  },
+
+  "risk_scoring": {
+    "base_scores": {
+      "critical": 9.0,
+      "high": 7.0,
+      "medium": 5.0,
+      "low": 3.0
+    },
+    "compliance_multipliers": {
+      "hipaa": 1.5,
+      "pci_dss": 1.4,
+      "sox": 1.3,
+      "gdpr": 1.3,
+      "fisma": 1.6,
+      "fedramp": 1.6,
+      "iso27001": 1.2,
+      "nist_csf": 1.1,
+      "ccpa": 1.2
+    },
+    "context_modifiers": {
+      "production_environment": 1.3,
+      "test_environment": 0.7,
+      "development_environment": 0.5,
+      "public_facing": 1.4,
+      "internal_only": 0.9,
+      "contains_sensitive_data": 1.5,
+      "high_traffic": 1.2
+    }
+  },
+
+  "remediation_guidance": {
+    "critical_severity": {
+      "max_response_time": "24_hours",
+      "required_approval": "security_team",
+      "notification_channels": ["email", "slack", "sms"],
+      "escalation_levels": ["manager", "ciso", "executive"]
+    },
+    "high_severity": {
+      "max_response_time": "7_days",
+      "required_approval": "team_lead",
+      "notification_channels": ["email", "slack"],
+      "escalation_levels": ["manager"]
+    },
+    "medium_severity": {
+      "max_response_time": "30_days",
+      "required_approval": "peer_review",
+      "notification_channels": ["email"],
+      "escalation_levels": []
+    },
+    "low_severity": {
+      "max_response_time": "90_days",
+      "required_approval": "none",
+      "notification_channels": ["email"],
+      "escalation_levels": []
+    }
+  }
+}

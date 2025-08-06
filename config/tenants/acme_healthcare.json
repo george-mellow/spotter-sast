@@ -1,0 +1,107 @@
+{
+  "id": "acme_healthcare",
+  "name": "ACME Healthcare Systems",
+  "industry": "healthcare",
+  "template": "healthcare_hipaa",
+  "customFrameworks": [],
+  "riskTolerance": "zero",
+  "contactEmail": "compliance@acmehealthcare.com",
+  "complianceOfficer": "Dr. Sarah Johnson",
+  "registeredAt": "2024-01-15T10:00:00Z",
+  "lastAssessment": "2024-01-20T15:30:00Z",
+  "complianceStatus": "compliant",
+  "frameworks": ["hipaa", "nist"],
+  "alertThresholds": {
+    "critical": 0,
+    "high": 0,
+    "medium": 2,
+    "low": 10
+  },
+  "requiredControls": [
+    "phi_protection",
+    "encryption_at_rest",
+    "access_controls",
+    "audit_logging",
+    "authentication_mechanisms"
+  ],
+  "organizationDetails": {
+    "size": "large",
+    "employees": 2500,
+    "locations": ["New York", "California", "Texas"],
+    "patientRecords": 500000,
+    "annualRevenue": "$250M",
+    "regulatoryHistory": "clean"
+  },
+  "technicalEnvironment": {
+    "primaryTech": ["Node.js", "Python", "React"],
+    "databases": ["PostgreSQL", "Redis"],
+    "cloudProviders": ["AWS"],
+    "developmentTeams": 15,
+    "deploymentFrequency": "weekly"
+  },
+  "complianceConfiguration": {
+    "scanFrequency": "daily",
+    "evidenceRetention": "7_years",
+    "auditReadiness": "always",
+    "emergencyContacts": [
+      {
+        "name": "Dr. Sarah Johnson",
+        "role": "Chief Compliance Officer",
+        "email": "s.johnson@acmehealthcare.com",
+        "phone": "+1-555-0101",
+        "escalationLevel": 1
+      },
+      {
+        "name": "Michael Chen",
+        "role": "CISO",
+        "email": "m.chen@acmehealthcare.com", 
+        "phone": "+1-555-0102",
+        "escalationLevel": 2
+      },
+      {
+        "name": "Dr. Robert Martinez", 
+        "role": "CEO",
+        "email": "r.martinez@acmehealthcare.com",
+        "phone": "+1-555-0100",
+        "escalationLevel": 3
+      }
+    ],
+    "notificationPreferences": {
+      "email": true,
+      "sms": true,
+      "webhook": true,
+      "slack_channel": "#hipaa-compliance"
+    },
+    "customPolicies": [
+      {
+        "name": "PHI Zero Tolerance",
+        "description": "No PHI data allowed in development/test environments",
+        "severity": "critical",
+        "autoRemediation": true
+      },
+      {
+        "name": "Encryption Mandatory",
+        "description": "All PHI must be encrypted at rest and in transit",
+        "severity": "critical", 
+        "autoRemediation": false
+      }
+    ]
+  },
+  "auditHistory": [
+    {
+      "date": "2024-01-15T00:00:00Z",
+      "type": "internal",
+      "result": "pass",
+      "findings": 0,
+      "auditor": "Internal Compliance Team"
+    },
+    {
+      "date": "2023-10-01T00:00:00Z", 
+      "type": "external",
+      "result": "pass",
+      "findings": 2,
+      "auditor": "Healthcare Compliance Associates",
+      "notes": "Minor documentation issues resolved"
+    }
+  ]
+}

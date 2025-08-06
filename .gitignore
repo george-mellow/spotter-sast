@@ -1,3 +1,5 @@
 /node_modules
 /.venv
-/logs
+/compliance-*/
+/incident-*/
+verify_documentation.sh

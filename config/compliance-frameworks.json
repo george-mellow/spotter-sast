@@ -1,0 +1,516 @@
+{
+  "compliance_frameworks": {
+    "hipaa": {
+      "name": "Health Insurance Portability and Accountability Act (HIPAA)",
+      "description": "US healthcare privacy and security regulations",
+      "version": "2013 Final Rule",
+      "enabled": true,
+      "severity_weights": {
+        "critical": 10,
+        "high": 7,
+        "medium": 4,
+        "low": 1
+      },
+      "fail_thresholds": {
+        "critical": 0,
+        "high": 0,
+        "medium": 5,
+        "low": 20
+      },
+      "required_checks": [
+        "encryption_at_rest",
+        "encryption_in_transit", 
+        "access_controls",
+        "audit_logging",
+        "data_integrity",
+        "authentication_mechanisms",
+        "secure_transmission",
+        "minimum_necessary_access",
+        "phi_protection"
+      ],
+      "controls": {
+        "164.308": {
+          "name": "Administrative Safeguards",
+          "requirements": ["access_controls", "audit_logging", "authentication_mechanisms"]
+        },
+        "164.310": {
+          "name": "Physical Safeguards", 
+          "requirements": ["workstation_security", "media_controls"]
+        },
+        "164.312": {
+          "name": "Technical Safeguards",
+          "requirements": ["encryption_at_rest", "encryption_in_transit", "access_controls", "audit_logging"]
+        },
+        "164.314": {
+          "name": "Organizational Requirements",
+          "requirements": ["business_associate_agreements", "group_health_plans"]
+        }
+      }
+    },
+    
+    "gdpr": {
+      "name": "General Data Protection Regulation (GDPR)",
+      "description": "EU data protection and privacy regulation",
+      "version": "2018",
+      "enabled": true,
+      "severity_weights": {
+        "critical": 15,
+        "high": 10,
+        "medium": 5,
+        "low": 2
+      },
+      "fail_thresholds": {
+        "critical": 0,
+        "high": 0,
+        "medium": 3,
+        "low": 15
+      },
+      "required_checks": [
+        "data_protection_by_design",
+        "consent_management",
+        "data_minimization",
+        "right_to_be_forgotten",
+        "privacy_by_default",
+        "data_portability",
+        "breach_notification",
+        "pseudonymization",
+        "encryption_personal_data"
+      ],
+      "articles": {
+        "25": {
+          "name": "Data Protection by Design and by Default",
+          "requirements": ["data_protection_by_design", "privacy_by_default", "pseudonymization"]
+        },
+        "32": {
+          "name": "Security of Processing",
+          "requirements": ["encryption_personal_data", "pseudonymization", "data_integrity"]
+        },
+        "33": {
+          "name": "Notification of Data Breach",
+          "requirements": ["breach_notification", "audit_logging"]
+        },
+        "20": {
+          "name": "Right to Data Portability", 
+          "requirements": ["data_portability", "structured_data_format"]
+        }
+      }
+    },
+
+    "pci_dss": {
+      "name": "Payment Card Industry Data Security Standard (PCI DSS)",
+      "description": "Security standards for organizations handling credit card information",
+      "version": "4.0",
+      "enabled": true,
+      "severity_weights": {
+        "critical": 12,
+        "high": 8,
+        "medium": 4,
+        "low": 1
+      },
+      "fail_thresholds": {
+        "critical": 0,
+        "high": 0,
+        "medium": 2,
+        "low": 10
+      },
+      "required_checks": [
+        "cardholder_data_protection",
+        "strong_access_controls",
+        "encryption_cardholder_data",
+        "secure_network_architecture",
+        "vulnerability_management",
+        "secure_development_practices",
+        "regular_monitoring",
+        "information_security_policy"
+      ],
+      "requirements": {
+        "1": {
+          "name": "Install and maintain firewall configuration",
+          "checks": ["secure_network_architecture", "firewall_configuration"]
+        },
+        "2": {
+          "name": "Do not use vendor-supplied defaults",
+          "checks": ["default_passwords", "secure_configuration"]
+        },
+        "3": {
+          "name": "Protect stored cardholder data",
+          "checks": ["cardholder_data_protection", "encryption_cardholder_data"]
+        },
+        "4": {
+          "name": "Encrypt transmission of cardholder data",
+          "checks": ["encryption_in_transit", "secure_transmission"]
+        },
+        "6": {
+          "name": "Develop and maintain secure systems",
+          "checks": ["secure_development_practices", "vulnerability_management"]
+        },
+        "8": {
+          "name": "Identify and authenticate access",
+          "checks": ["strong_access_controls", "authentication_mechanisms"]
+        },
+        "10": {
+          "name": "Track and monitor access",
+          "checks": ["regular_monitoring", "audit_logging"]
+        }
+      }
+    },
+
+    "iso27001": {
+      "name": "ISO/IEC 27001:2022 Information Security Management",
+      "description": "International standard for information security management systems",
+      "version": "2022",
+      "enabled": true,
+      "severity_weights": {
+        "critical": 10,
+        "high": 7,
+        "medium": 4,
+        "low": 2
+      },
+      "fail_thresholds": {
+        "critical": 0,
+        "high": 2,
+        "medium": 10,
+        "low": 25
+      },
+      "required_checks": [
+        "risk_management",
+        "security_controls",
+        "information_classification",
+        "incident_management",
+        "business_continuity",
+        "supplier_relationships",
+        "system_acquisition",
+        "cryptography"
+      ],
+      "controls": {
+        "A.5": {
+          "name": "Information Security Policies",
+          "checks": ["information_security_policy", "security_controls"]
+        },
+        "A.6": {
+          "name": "Organization of Information Security",
+          "checks": ["security_roles", "supplier_relationships"]
+        },
+        "A.8": {
+          "name": "Asset Management",
+          "checks": ["information_classification", "media_handling"]
+        },
+        "A.9": {
+          "name": "Access Control",
+          "checks": ["access_controls", "authentication_mechanisms"]
+        },
+        "A.10": {
+          "name": "Cryptography",
+          "checks": ["cryptography", "key_management"]
+        },
+        "A.12": {
+          "name": "Operations Security",
+          "checks": ["malware_protection", "vulnerability_management"]
+        },
+        "A.14": {
+          "name": "System Acquisition, Development and Maintenance", 
+          "checks": ["secure_development_practices", "system_acquisition"]
+        },
+        "A.16": {
+          "name": "Information Security Incident Management",
+          "checks": ["incident_management", "incident_response"]
+        },
+        "A.17": {
+          "name": "Business Continuity Management",
+          "checks": ["business_continuity", "redundancy"]
+        }
+      }
+    },
+
+    "sox": {
+      "name": "Sarbanes-Oxley Act (SOX)",
+      "description": "US federal law for financial reporting and corporate governance",
+      "version": "2002",
+      "enabled": true,
+      "severity_weights": {
+        "critical": 12,
+        "high": 8,
+        "medium": 4,
+        "low": 2
+      },
+      "fail_thresholds": {
+        "critical": 0,
+        "high": 1,
+        "medium": 5,
+        "low": 15
+      },
+      "required_checks": [
+        "internal_controls",
+        "financial_reporting_accuracy",
+        "change_management",
+        "access_controls",
+        "segregation_of_duties",
+        "audit_trails",
+        "data_integrity",
+        "system_availability"
+      ],
+      "sections": {
+        "302": {
+          "name": "Corporate Responsibility for Financial Reports",
+          "checks": ["financial_reporting_accuracy", "internal_controls"]
+        },
+        "404": {
+          "name": "Management Assessment of Internal Controls",
+          "checks": ["internal_controls", "change_management", "segregation_of_duties"]
+        },
+        "409": {
+          "name": "Real Time Issuer Disclosures",
+          "checks": ["audit_trails", "data_integrity"]
+        }
+      }
+    },
+
+    "nist_csf": {
+      "name": "NIST Cybersecurity Framework",
+      "description": "Framework for improving critical infrastructure cybersecurity",
+      "version": "2.0",
+      "enabled": true,
+      "severity_weights": {
+        "critical": 10,
+        "high": 7,
+        "medium": 4,
+        "low": 2
+      },
+      "fail_thresholds": {
+        "critical": 1,
+        "high": 5,
+        "medium": 15,
+        "low": 30
+      },
+      "required_checks": [
+        "asset_management",
+        "risk_assessment",
+        "governance",
+        "identity_management",
+        "protective_technology",
+        "awareness_training",
+        "data_security",
+        "information_protection",
+        "maintenance",
+        "anomaly_detection",
+        "continuous_monitoring",
+        "detection_processes",
+        "response_planning",
+        "communications",
+        "analysis",
+        "mitigation",
+        "improvements",
+        "recovery_planning",
+        "recovery_implementation",
+        "recovery_communications"
+      ],
+      "functions": {
+        "ID": {
+          "name": "Identify",
+          "categories": {
+            "ID.AM": "Asset Management",
+            "ID.BE": "Business Environment", 
+            "ID.GV": "Governance",
+            "ID.RA": "Risk Assessment",
+            "ID.RM": "Risk Management Strategy"
+          },
+          "checks": ["asset_management", "risk_assessment", "governance"]
+        },
+        "PR": {
+          "name": "Protect",
+          "categories": {
+            "PR.AC": "Identity Management and Access Control",
+            "PR.AT": "Awareness and Training",
+            "PR.DS": "Data Security",
+            "PR.IP": "Information Protection Processes",
+            "PR.MA": "Maintenance",
+            "PR.PT": "Protective Technology"
+          },
+          "checks": ["identity_management", "data_security", "protective_technology", "maintenance"]
+        },
+        "DE": {
+          "name": "Detect",
+          "categories": {
+            "DE.AE": "Anomalies and Events",
+            "DE.CM": "Continuous Monitoring",
+            "DE.DP": "Detection Processes"
+          },
+          "checks": ["anomaly_detection", "continuous_monitoring", "detection_processes"]
+        },
+        "RS": {
+          "name": "Respond",
+          "categories": {
+            "RS.RP": "Response Planning",
+            "RS.CO": "Communications",
+            "RS.AN": "Analysis",
+            "RS.MI": "Mitigation",
+            "RS.IM": "Improvements"
+          },
+          "checks": ["response_planning", "communications", "analysis", "mitigation"]
+        },
+        "RC": {
+          "name": "Recover",
+          "categories": {
+            "RC.RP": "Recovery Planning",
+            "RC.IM": "Improvements",
+            "RC.CO": "Communications"
+          },
+          "checks": ["recovery_planning", "recovery_implementation"]
+        }
+      }
+    },
+
+    "ccpa": {
+      "name": "California Consumer Privacy Act (CCPA)",
+      "description": "California state law for consumer privacy rights",
+      "version": "2020",
+      "enabled": true,
+      "severity_weights": {
+        "critical": 12,
+        "high": 8,
+        "medium": 4,
+        "low": 2
+      },
+      "fail_thresholds": {
+        "critical": 0,
+        "high": 1,
+        "medium": 5,
+        "low": 15
+      },
+      "required_checks": [
+        "consumer_rights",
+        "data_collection_transparency",
+        "right_to_delete",
+        "right_to_know",
+        "right_to_opt_out",
+        "non_discrimination",
+        "data_security_practices"
+      ]
+    },
+
+    "fisma": {
+      "name": "Federal Information Security Management Act (FISMA)",
+      "description": "US federal law for information security in government agencies",
+      "version": "2014",
+      "enabled": false,
+      "severity_weights": {
+        "critical": 15,
+        "high": 10,
+        "medium": 5,
+        "low": 2
+      },
+      "fail_thresholds": {
+        "critical": 0,
+        "high": 0,
+        "medium": 2,
+        "low": 8
+      },
+      "required_checks": [
+        "continuous_monitoring",
+        "security_controls",
+        "risk_management",
+        "incident_response",
+        "configuration_management",
+        "security_assessment"
+      ]
+    },
+
+    "fedramp": {
+      "name": "Federal Risk and Authorization Management Program (FedRAMP)",
+      "description": "US government cloud security program",
+      "version": "2.0",
+      "enabled": false,
+      "severity_weights": {
+        "critical": 15,
+        "high": 10,
+        "medium": 5,
+        "low": 2
+      },
+      "fail_thresholds": {
+        "critical": 0,
+        "high": 0,
+        "medium": 1,
+        "low": 5
+      },
+      "required_checks": [
+        "continuous_monitoring",
+        "security_controls",
+        "risk_management",
+        "incident_response",
+        "configuration_management",
+        "cloud_security"
+      ]
+    }
+  },
+
+  "compliance_settings": {
+    "default_enabled_frameworks": ["owasp", "nist_csf"],
+    "auto_enable_by_industry": {
+      "healthcare": ["hipaa", "nist_csf"],
+      "finance": ["pci_dss", "sox", "nist_csf"],
+      "ecommerce": ["pci_dss", "gdpr", "ccpa"],
+      "government": ["fisma", "fedramp", "nist_csf"],
+      "general": ["owasp", "nist_csf", "iso27001"]
+    },
+    "reporting": {
+      "include_compliance_summary": true,
+      "include_framework_details": true,
+      "include_remediation_guidance": true,
+      "compliance_score_calculation": "weighted_average"
+    },
+    "notifications": {
+      "compliance_violations": true,
+      "framework_updates": false,
+      "threshold_breaches": true
+    }
+  },
+
+  "vulnerability_compliance_mapping": {
+    "sql_injection": {
+      "hipaa": ["164.312(a)(1)", "164.312(c)(1)"],
+      "gdpr": ["Article 32"],
+      "pci_dss": ["6.5.1"],
+      "iso27001": ["A.14.2.1"],
+      "sox": ["Section 404"],
+      "nist_csf": ["PR.DS-1", "PR.DS-2"]
+    },
+    "xss": {
+      "hipaa": ["164.312(a)(1)"],
+      "gdpr": ["Article 32"],
+      "pci_dss": ["6.5.7"],
+      "iso27001": ["A.14.2.1"],
+      "nist_csf": ["PR.DS-1"]
+    },
+    "hardcoded_secrets": {
+      "hipaa": ["164.312(a)(2)(i)"],
+      "gdpr": ["Article 32"],
+      "pci_dss": ["3.4", "8.2.1"],
+      "iso27001": ["A.10.1.1"],
+      "sox": ["Section 404"],
+      "nist_csf": ["PR.AC-1", "PR.DS-1"]
+    },
+    "weak_crypto": {
+      "hipaa": ["164.312(a)(2)(iv)", "164.312(e)(2)(ii)"],
+      "gdpr": ["Article 32"],
+      "pci_dss": ["3.4", "4.1"],
+      "iso27001": ["A.10.1.1"],
+      "nist_csf": ["PR.DS-1", "PR.DS-2"]
+    },
+    "insecure_authentication": {
+      "hipaa": ["164.312(d)"],
+      "gdpr": ["Article 32"],
+      "pci_dss": ["8.1", "8.2"],
+      "iso27001": ["A.9.4.2"],
+      "sox": ["Section 404"],
+      "nist_csf": ["PR.AC-1"]
+    },
+    "insufficient_logging": {
+      "hipaa": ["164.312(b)"],
+      "gdpr": ["Article 33"],
+      "pci_dss": ["10.1"],
+      "iso27001": ["A.12.4.1"],
+      "sox": ["Section 409"],
+      "nist_csf": ["DE.AE-3", "RS.AN-1"]
+    }
+  }
+}

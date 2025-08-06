@@ -1,9 +1,10 @@
 {
-  "name": "mcp-server-basic",
-  "version": "1.0.0",
+  "name": "spotter-sast",
+  "version": "2.1.0",
   "type": "module",
-  "description": "Basic MCP server template",
-  "main": "server.js",
+  "description": "Advanced SAST security analysis with multi-tool integration and comprehensive compliance verification",
+  "main": "src/server.js",
+  "keywords": ["security", "sast", "compliance", "hipaa", "gdpr", "pci-dss", "vulnerability-scanning", "mcp"],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
     "axios": "^1.7.0",
@@ -19,9 +20,62 @@
     "zod": "^3.25.36"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node src/server.js",
+    "compliance-setup": "./infra/scripts/compliance.sh setup",
+    "compliance-scan": "./infra/scripts/compliance.sh scan",
+    "compliance-report": "./infra/scripts/compliance.sh report",
+    "test": "node test/test-compliance.js",
+    "docker:build": "docker build -f infra/docker/Dockerfile -t spotter-sast:latest .",
+    "docker:run": "docker run -d --name spotter-sast -p 3000:3000 spotter-sast:latest",
+    "docker:scan": "docker run --rm -v $(pwd):/scan-target:ro spotter-sast:latest ./infra/scripts/compliance.sh scan /scan-target"
   },
   "devDependencies": {
     "eslint": "^9.32.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/george-mellow/spotter-sast.git"
+  },
+  "author": "george-mellow",
+  "license": "MIT",
+  "homepage": "https://github.com/george-mellow/spotter-sast#readme",
+  "bugs": {
+    "url": "https://github.com/george-mellow/spotter-sast/issues"
+  },
+  "compliance": {
+    "frameworks": [
+      "HIPAA",
+      "GDPR", 
+      "PCI DSS",
+      "ISO 27001",
+      "SOX",
+      "NIST CSF",
+      "CCPA",
+      "FISMA",
+      "FedRAMP"
+    ],
+    "industries": [
+      "healthcare",
+      "finance",
+      "ecommerce",
+      "government",
+      "general"
+    ]
+  },
+  "mcp": {
+    "tools": [
+      "enhanced_scan_file",
+      "enhanced_scan_directory", 
+      "compliance_scan",
+      "compliance_frameworks_manage",
+      "generate_compliance_report",
+      "ai_enhanced_auto_fix",
+      "start_continuous_monitoring",
+      "security_dashboard"
+    ]
   }
 }
