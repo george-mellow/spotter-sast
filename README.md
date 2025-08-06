@@ -37,35 +37,37 @@ Spotter-SAST is an advanced security analysis platform that combines multiple in
 8. **ComplianceEvidenceCollector**: Collects and secures compliance evidence with cryptographic integrity
 9. **ComplianceRemediationEngine**: Automated remediation workflows with SLA tracking
 
-### Project Structure
-spotter-sast/
-├── src/
-│   ├── server.js                          # Main MCP server with 15+ tools
-│   ├── compliance/
-│   │   ├── compliance-verification.js     # 4 core compliance classes
-│   │   ├── compliance-mcp-tools.js        # 10 compliance-specific MCP tools
-│   │   └── logs/                          # Compliance audit logs
-│   └── logs/                              # General application logs
-├── config/
-│   ├── compliance-frameworks.json         # Framework definitions (9 frameworks)
-│   ├── compliance-settings.json           # User compliance configuration
-│   ├── enhanced-compliance-config.json    # Advanced compliance settings
-│   ├── custom-compliance-rules.json       # Organization-specific rules
-│   ├── custom-policies.json              # Security policies
-│   ├── monitoring-config.json            # Monitoring configuration
-│   ├── roles.json                        # RBAC role definitions
-│   └── tenants/                          # Multi-tenant configurations
-├── infra/
-│   ├── docker/                           # Docker configurations
-│   └── scripts/
-│       ├── compliance.sh                 # Compliance management script
-│       └── docker-helper.sh              # Docker utilities
-├── compliance-baselines/                 # Drift detection baselines
-├── compliance-evidence/                  # Cryptographically signed evidence
-├── incident-reports/                     # Remediation workflow reports
-├── test/
-│   └── test-compliance.js               # Compliance testing suite
-└── docs/                                # Comprehensive documentation
+## 📁 Project Structure
+
+| Path                                        | Description                                                        |
+| :------------------------------------------ | :----------------------------------------------------------------- |
+| **`src/`** | Contains the core application source code.                         |
+| &nbsp;&nbsp;├── `server.js`                  | The main MCP server, integrating over 15 tools.                    |
+| &nbsp;&nbsp;├── **`compliance/`** | Houses all compliance-related logic.                               |
+| &nbsp;&nbsp;│&nbsp;&nbsp;├── `compliance-verification.js` | Contains the 4 core compliance verification classes.               |
+| &nbsp;&nbsp;│&nbsp;&nbsp;├── `compliance-mcp-tools.js` | Includes 10 compliance-specific MCP tools.                         |
+| &nbsp;&nbsp;│&nbsp;&nbsp;└── **`logs/`** | Stores detailed compliance audit logs.                             |
+| &nbsp;&nbsp;└── **`logs/`** | Stores general application logs.                                   |
+| **`config/`** | All configuration files for the application.                       |
+| &nbsp;&nbsp;├── `compliance-frameworks.json` | Definitions for 9 supported compliance frameworks.                 |
+| &nbsp;&nbsp;├── `compliance-settings.json`   | User-defined compliance configurations.                            |
+| &nbsp;&nbsp;├── `enhanced-compliance-config.json` | Settings for advanced compliance features.                         |
+| &nbsp;&nbsp;├── `custom-compliance-rules.json` | Organization-specific custom compliance rules.                     |
+| &nbsp;&nbsp;├── `custom-policies.json`      | Custom security policy definitions.                                |
+| &nbsp;&nbsp;├── `monitoring-config.json`    | Configuration for application monitoring.                          |
+| &nbsp;&nbsp;├── `roles.json`                | Role-Based Access Control (RBAC) role definitions.                 |
+| &nbsp;&nbsp;└── **`tenants/`** | Configurations for multi-tenant deployments.                       |
+| **`infra/`** | Infrastructure as Code (IaC) and related scripts.                  |
+| &nbsp;&nbsp;├── **`docker/`** | Contains Docker configurations and Dockerfiles.                    |
+| &nbsp;&nbsp;└── **`scripts/`** | Helper and management scripts.                                     |
+| &nbsp;&nbsp;&nbsp;&nbsp;├── `compliance.sh` | A script for managing compliance tasks.                            |
+| &nbsp;&nbsp;&nbsp;&nbsp;└── `docker-helper.sh` | Utility script for Docker operations.                              |
+| **`compliance-baselines/`** | Stores baseline configurations for drift detection.                |
+| **`compliance-evidence/`** | Contains cryptographically signed evidence for audits.             |
+| **`incident-reports/`** | Generated reports from the remediation workflow.                   |
+| **`test/`** | Automated tests for the application.                               |
+| &nbsp;&nbsp;└── `test-compliance.js`        | The testing suite specifically for compliance features.            |
+| **`docs/`** | Comprehensive project documentation.                               |
 
 ### Supported Languages & Tools
 
