@@ -162,11 +162,11 @@ The server will start with:
 Comprehensive multi-tool SAST scan for individual files with AI analysis
 ```json
 {
-  \"filepath\": \"/path/to/file.js\",
-  \"tools\": [\"semgrep\", \"eslint\"],
-  \"policies\": [\"owasp\", \"pci\"],
-  \"includeFixSuggestions\": true,
-  \"user_token\": \"jwt-token\"
+  "filepath": "/path/to/file.js",
+  "tools": ["semgrep", "eslint"],
+  "policies": ["owasp", "pci"],
+  "includeFixSuggestions": true,
+  "user_token": "jwt-token"
 }
 ```
 
@@ -174,10 +174,10 @@ Comprehensive multi-tool SAST scan for individual files with AI analysis
 Directory-wide security analysis with continuous monitoring
 ```json
 {
-  \"dirpath\": \"/path/to/project\",
-  \"enableMonitoring\": true,
-  \"schedule\": \"0 */6 * * *\",
-  \"policies\": [\"owasp\", \"enterprise_security\"]
+  "dirpath": "/path/to/project",
+  "enableMonitoring": true,
+  "schedule": "0 */6 * * *",
+  "policies": ["owasp", "enterprise_security"]
 }
 ```
 
@@ -187,10 +187,10 @@ Directory-wide security analysis with continuous monitoring
 Comprehensive compliance scanning with framework-specific analysis
 ```json
 {
-  \"filepath\": \"/path/to/code\",
-  \"frameworks\": [\"hipaa\", \"gdpr\", \"pci_dss\"],
-  \"industry\": \"healthcare\",
-  \"include_recommendations\": true
+  "filepath": "/path/to/code",
+  "frameworks": ["hipaa", "gdpr", "pci_dss"],
+  "industry": "healthcare",
+  "include_recommendations": true
 }
 ```
 
@@ -198,9 +198,9 @@ Comprehensive compliance scanning with framework-specific analysis
 Manage compliance frameworks (enable/disable/configure)
 ```json
 {
-  \"action\": \"enable\",
-  \"framework\": \"hipaa\",
-  \"industry\": \"healthcare\"
+  "action": "enable",
+  "framework": "hipaa",
+  "industry": "healthcare"
 }
 ```
 
@@ -208,9 +208,9 @@ Manage compliance frameworks (enable/disable/configure)
 Create compliance baselines for drift detection
 ```json
 {
-  \"project_path\": \"./src\",
-  \"frameworks\": [\"hipaa\", \"gdpr\"],
-  \"baseline_name\": \"production_baseline\"
+  "project_path": "./src",
+  "frameworks": ["hipaa", "gdpr"],
+  "baseline_name": "production_baseline"
 }
 ```
 
@@ -218,8 +218,8 @@ Create compliance baselines for drift detection
 Detect compliance drift from established baselines
 ```json
 {
-  \"project_path\": \"./src\",
-  \"frameworks\": [\"hipaa\", \"gdpr\"]
+  "project_path": "./src",
+  "frameworks": ["hipaa", "gdpr"]
 }
 ```
 
@@ -227,12 +227,12 @@ Detect compliance drift from established baselines
 Register organization/team for multi-tenant compliance management
 ```json
 {
-  \"tenant_id\": \"acme_healthcare\",
-  \"tenant_config\": {
-    \"name\": \"ACME Healthcare\",
-    \"industry\": \"healthcare\",
-    \"template\": \"healthcare_hipaa\",
-    \"riskTolerance\": \"zero\"
+  "tenant_id": "acme_healthcare",
+  "tenant_config": {
+    "name": "ACME Healthcare",
+    "industry": "healthcare",
+    "template": "healthcare_hipaa",
+    "riskTolerance": "zero"
   }
 }
 ```
@@ -241,8 +241,8 @@ Register organization/team for multi-tenant compliance management
 Perform tenant-specific compliance assessment
 ```json
 {
-  \"tenant_id\": \"acme_healthcare\",
-  \"project_path\": \"./patient_portal\"
+  "tenant_id": "acme_healthcare",
+  "project_path": "./patient_portal"
 }
 ```
 
@@ -250,10 +250,10 @@ Perform tenant-specific compliance assessment
 Collect cryptographically signed compliance evidence
 ```json
 {
-  \"scan_path\": \"./src\",
-  \"frameworks\": [\"hipaa\", \"pci\"],
-  \"collector\": \"security@company.com\",
-  \"notes\": \"Pre-deployment compliance scan\"
+  "scan_path": "./src",
+  "frameworks": ["hipaa", "pci"],
+  "collector": "security@company.com",
+  "notes": "Pre-deployment compliance scan"
 }
 ```
 
@@ -261,12 +261,12 @@ Collect cryptographically signed compliance evidence
 Generate comprehensive audit reports with evidence chain
 ```json
 {
-  \"frameworks\": [\"hipaa\", \"pci\"],
-  \"time_range\": {
-    \"start\": \"2024-01-01T00:00:00Z\",
-    \"end\": \"2024-12-31T23:59:59Z\"
+  "frameworks": ["hipaa", "pci"],
+  "time_range": {
+    "start": "2024-01-01T00:00:00Z",
+    "end": "2024-12-31T23:59:59Z"
   },
-  \"report_format\": \"detailed\"
+  "report_format": "detailed"
 }
 ```
 
@@ -274,13 +274,13 @@ Generate comprehensive audit reports with evidence chain
 Trigger automated compliance remediation workflows
 ```json
 {
-  \"finding\": {
-    \"type\": \"hardcoded_secrets\",
-    \"severity\": \"Critical\",
-    \"file\": \"./config/database.js\"
+  "finding": {
+    "type": "hardcoded_secrets",
+    "severity": "Critical",
+    "file": "./config/database.js"
   },
-  \"framework\": \"hipaa\",
-  \"automation_level\": \"semi_automatic\"
+  "framework": "hipaa",
+  "automation_level": "semi_automatic"
 }
 ```
 
@@ -288,12 +288,12 @@ Trigger automated compliance remediation workflows
 Advanced compliance analytics with predictive insights
 ```json
 {
-  \"time_range\": {
-    \"start\": \"2024-01-01T00:00:00Z\",
-    \"end\": \"2024-12-31T23:59:59Z\"
+  "time_range": {
+    "start": "2024-01-01T00:00:00Z",
+    "end": "2024-12-31T23:59:59Z"
   },
-  \"frameworks\": [\"hipaa\", \"gdpr\", \"pci\"],
-  \"include_predictions\": true
+  "frameworks": ["hipaa", "gdpr", "pci"],
+  "include_predictions": true
 }
 ```
 
@@ -303,10 +303,10 @@ Advanced compliance analytics with predictive insights
 Intelligent vulnerability remediation with validation
 ```json
 {
-  \"filepath\": \"/path/to/file.js\",
-  \"strategy\": \"balanced\",
-  \"validate_fixes\": true,
-  \"create_backup\": true
+  "filepath": "/path/to/file.js",
+  "strategy": "balanced",
+  "validate_fixes": true,
+  "create_backup": true
 }
 ```
 
@@ -314,11 +314,11 @@ Intelligent vulnerability remediation with validation
 Real-time security monitoring with automated alerts
 ```json
 {
-  \"project_path\": \"/path/to/project\",
-  \"schedule\": \"0 */6 * * *\",
-  \"alert_thresholds\": {
-    \"critical\": 0,
-    \"high\": 5
+  "project_path": "/path/to/project",
+  "schedule": "0 */6 * * *",
+  "alert_thresholds": {
+    "critical": 0,
+    "high": 5
   }
 }
 ```
@@ -327,9 +327,9 @@ Real-time security monitoring with automated alerts
 Real-time security metrics and alerts dashboard
 ```json
 {
-  \"time_range\": \"24h\",
-  \"include_trends\": true,
-  \"include_alerts\": true
+  "time_range": "24h",
+  "include_trends": true,
+  "include_alerts": true
 }
 ```
 
@@ -339,11 +339,11 @@ Real-time security metrics and alerts dashboard
 Comprehensive security reporting with executive summaries
 ```json
 {
-  \"scan_path\": \"/path/to/project\",
-  \"report_dir\": \"./reports\",
-  \"format\": \"sarif\",
-  \"include_executive_summary\": true,
-  \"include_compliance_matrix\": true
+  "scan_path": "/path/to/project",
+  "report_dir": "./reports",
+  "format": "sarif",
+  "include_executive_summary": true,
+  "include_compliance_matrix": true
 }
 ```
 
@@ -351,9 +351,9 @@ Comprehensive security reporting with executive summaries
 Policy and compliance management
 ```json
 {
-  \"action\": \"check\",
-  \"policy_name\": \"owasp\",
-  \"scan_results\": {...}
+  "action": "check",
+  "policy_name": "owasp",
+  "scan_results": {...}
 }
 ```
 
@@ -361,7 +361,7 @@ Policy and compliance management
 Comprehensive vulnerability information with OWASP mapping
 ```json
 {
-  \"vuln_type\": \"sql_injection\"
+  "vuln_type": "sql_injection"
 }
 ```
 
@@ -437,52 +437,52 @@ Comprehensive vulnerability information with OWASP mapping
 ### Healthcare Organization Setup
 ```bash
 # 1. Configure for healthcare industry
-echo \"ORGANIZATION_INDUSTRY=healthcare\" >> .env
-echo \"ENABLE_HIPAA=true\" >> .env
-echo \"ENABLE_NIST_CSF=true\" >> .env
+echo "ORGANIZATION_INDUSTRY=healthcare" >> .env
+echo "ENABLE_HIPAA=true" >> .env
+echo "ENABLE_NIST_CSF=true" >> .env
 
 # 2. Register healthcare tenant
 echo '{
-  \"tenant_id\": \"acme_medical\",
-  \"tenant_config\": {
-    \"name\": \"ACME Medical Center\",
-    \"industry\": \"healthcare\",
-    \"template\": \"healthcare_hipaa\",
-    \"riskTolerance\": \"zero\",
-    \"complianceOfficer\": \"Dr. Sarah Johnson\",
-    \"contactEmail\": \"compliance@acmemedical.com\"
+  "tenant_id": "acme_medical",
+  "tenant_config": {
+    "name": "ACME Medical Center",
+    "industry": "healthcare",
+    "template": "healthcare_hipaa",
+    "riskTolerance": "zero",
+    "complianceOfficer": "Dr. Sarah Johnson",
+    "contactEmail": "compliance@acmemedical.com"
   }
 }' | node src/server.js register_compliance_tenant
 
 # 3. Create compliance baseline
 echo '{
-  \"project_path\": \"./patient-portal\",
-  \"frameworks\": [\"hipaa\", \"nist\"],
-  \"baseline_name\": \"patient_portal_baseline\"
+  "project_path": "./patient-portal",
+  "frameworks": ["hipaa", "nist"],
+  "baseline_name": "patient_portal_baseline"
 }' | node src/server.js compliance_drift_baseline
 
 # 4. Perform HIPAA compliance scan
 echo '{
-  \"tenant_id\": \"acme_medical\",
-  \"project_path\": \"./patient-portal\"
+  "tenant_id": "acme_medical",
+  "project_path": "./patient-portal"
 }' | node src/server.js tenant_compliance_assessment
 ```
 
 ### Financial Services Setup
 ```bash
 # Configure for financial industry
-echo \"ORGANIZATION_INDUSTRY=finance\" >> .env
-echo \"ENABLE_PCI_DSS=true\" >> .env
-echo \"ENABLE_SOX=true\" >> .env
+echo "ORGANIZATION_INDUSTRY=finance" >> .env
+echo "ENABLE_PCI_DSS=true" >> .env
+echo "ENABLE_SOX=true" >> .env
 
 # Register financial tenant with strict controls
 echo '{
-  \"tenant_id\": \"banking_corp\",
-  \"tenant_config\": {
-    \"name\": \"Banking Corporation\",
-    \"industry\": \"finance\", 
-    \"template\": \"financial_pci\",
-    \"riskTolerance\": \"minimal\"
+  "tenant_id": "banking_corp",
+  "tenant_config": {
+    "name": "Banking Corporation",
+    "industry": "finance", 
+    "template": "financial_pci",
+    "riskTolerance": "minimal"
   }
 }' | node src/server.js register_compliance_tenant
 ```
@@ -490,10 +490,10 @@ echo '{
 ### E-commerce Platform Setup
 ```bash
 # Configure for e-commerce
-echo \"ORGANIZATION_INDUSTRY=ecommerce\" >> .env
-echo \"ENABLE_PCI_DSS=true\" >> .env
-echo \"ENABLE_GDPR=true\" >> .env
-echo \"ENABLE_CCPA=true\" >> .env
+echo "ORGANIZATION_INDUSTRY=ecommerce" >> .env
+echo "ENABLE_PCI_DSS=true" >> .env
+echo "ENABLE_GDPR=true" >> .env
+echo "ENABLE_CCPA=true" >> .env
 ```
 
 ### Compliance Workflow Examples
@@ -505,17 +505,17 @@ node src/server.js enhanced_scan_directory ./src
 
 # 2. Collect cryptographic evidence
 echo '{
-  \"scan_path\": \"./src\",
-  \"frameworks\": [\"hipaa\", \"gdpr\"],
-  \"collector\": \"audit@company.com\",
-  \"notes\": \"Quarterly compliance audit scan\"
+  "scan_path": "./src",
+  "frameworks": ["hipaa", "gdpr"],
+  "collector": "audit@company.com",
+  "notes": "Quarterly compliance audit scan"
 }' | node src/server.js collect_compliance_evidence
 
 # 3. Generate audit report
 echo '{
-  \"frameworks\": [\"hipaa\", \"gdpr\"],
-  \"time_range\": {\"start\": \"2024-01-01T00:00:00Z\", \"end\": \"2024-12-31T23:59:59Z\"},
-  \"report_format\": \"detailed\"
+  "frameworks": ["hipaa", "gdpr"],
+  "time_range": {"start": "2024-01-01T00:00:00Z", "end": "2024-12-31T23:59:59Z"},
+  "report_format": "detailed"
 }' | node src/server.js generate_compliance_audit_report
 ```
 
@@ -523,15 +523,15 @@ echo '{
 ```bash
 # Trigger HIPAA violation remediation
 echo '{
-  \"finding\": {
-    \"type\": \"hardcoded_secrets\",
-    \"severity\": \"Critical\",
-    \"file\": \"./config/database.js\",
-    \"line\": 15
+  "finding": {
+    "type": "hardcoded_secrets",
+    "severity": "Critical",
+    "file": "./config/database.js",
+    "line": 15
   },
-  \"framework\": \"hipaa\",
-  \"automation_level\": \"semi_automatic\",
-  \"stakeholders\": [\"security-team\", \"compliance-officer\"]
+  "framework": "hipaa",
+  "automation_level": "semi_automatic",
+  "stakeholders": ["security-team", "compliance-officer"]
 }' | node src/server.js trigger_compliance_remediation
 ```
 
@@ -539,15 +539,15 @@ echo '{
 ```bash
 # Start real-time monitoring with compliance checking
 echo '{
-  \"project_path\": \"./production-app\",
-  \"schedule\": \"0 */2 * * *\",
-  \"alert_thresholds\": {\"critical\": 0, \"high\": 1}
+  "project_path": "./production-app",
+  "schedule": "0 */2 * * *",
+  "alert_thresholds": {"critical": 0, "high": 1}
 }' | node src/server.js start_continuous_monitoring
 
 # Monitor compliance drift
 echo '{
-  \"project_path\": \"./production-app\",
-  \"frameworks\": [\"hipaa\", \"pci_dss\"]
+  "project_path": "./production-app",
+  "frameworks": ["hipaa", "pci_dss"]
 }' | node src/server.js compliance_drift_detect
 ```
 
@@ -650,35 +650,35 @@ jobs:
           
       - name: Create Compliance Baseline (if not exists)
         run: |
-          echo '{\"project_path\": \"./src\", \"frameworks\": [\"owasp\", \"nist\"]}' | \\
+          echo '{"project_path": "./src", "frameworks": ["owasp", "nist"]}' | \\
             node src/server.js compliance_drift_baseline || true
           
       - name: Enhanced Security Scan with Compliance
         run: |
-          echo '{\"dirpath\": \"./\", \"policies\": [\"owasp\", \"nist\"]}' | \\
+          echo '{"dirpath": "./", "policies": ["owasp", "nist"]}' | \\
             node src/server.js enhanced_scan_directory
             
       - name: Collect Compliance Evidence
         run: |
           echo '{
-            \"scan_path\": \"./src\",
-            \"frameworks\": [\"owasp\", \"nist\"],
-            \"collector\": \"github-actions\",
-            \"notes\": \"CI/CD pipeline compliance scan\"
+            "scan_path": "./src",
+            "frameworks": ["owasp", "nist"],
+            "collector": "github-actions",
+            "notes": "CI/CD pipeline compliance scan"
           }' | node src/server.js collect_compliance_evidence
           
       - name: Detect Compliance Drift
         run: |
-          echo '{\"project_path\": \"./src\", \"frameworks\": [\"owasp\", \"nist\"]}' | \\
+          echo '{"project_path": "./src", "frameworks": ["owasp", "nist"]}' | \\
             node src/server.js compliance_drift_detect
             
       - name: Generate Enhanced SARIF Report
         run: |
           echo '{
-            \"scan_path\": \"./\",
-            \"report_dir\": \"./reports\",
-            \"format\": \"sarif\",
-            \"include_compliance_matrix\": true
+            "scan_path": "./",
+            "report_dir": "./reports",
+            "format": "sarif",
+            "include_compliance_matrix": true
           }' | node src/server.js generate_enhanced_report
           
       - name: Upload SARIF Results
@@ -689,8 +689,8 @@ jobs:
       - name: Check Compliance Gate
         run: |
           # Fail build if critical compliance violations found
-          if grep -q '\"status\": \"FAIL\"' reports/*.json; then
-            echo \"❌ Compliance gate failed - critical violations found\"
+          if grep -q '"status": "FAIL"' reports/*.json; then
+            echo "❌ Compliance gate failed - critical violations found"
             exit 1
           fi
 ```
@@ -734,7 +734,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \\
   CMD curl -f http://localhost:3001/health || exit 1
 
 # Start with compliance initialization
-CMD [\"node\", \"src/server.js\"]
+CMD ["node", "src/server.js"]
 ```
 
 ### Docker Compose with Compliance Services
@@ -745,8 +745,8 @@ services:
   spotter-sast:
     build: .
     ports:
-      - \"3000:3000\"
-      - \"3001:3001\"
+      - "3000:3000"
+      - "3001:3001"
     environment:
       - ORGANIZATION_INDUSTRY=healthcare
       - ENABLE_HIPAA=true
@@ -931,18 +931,18 @@ Create tenant-specific configurations in `config/tenants/`:
 
 ```json
 {
-  \"tenant_id\": \"healthcare_division\",
-  \"config\": {
-    \"name\": \"Healthcare Division\", 
-    \"industry\": \"healthcare\",
-    \"riskTolerance\": \"zero\",
-    \"enabledFrameworks\": [\"hipaa\", \"nist\"],
-    \"customRules\": [\"phi_detection\", \"encryption_required\"],
-    \"contactEmail\": \"compliance@healthcare-div.com\",
-    \"complianceOfficer\": \"Dr. Sarah Johnson\",
-    \"escalationMatrix\": {
-      \"critical\": [\"ciso@company.com\", \"legal@company.com\"],
-      \"high\": [\"security@company.com\", \"compliance@healthcare-div.com\"]
+  "tenant_id": "healthcare_division",
+  "config": {
+    "name": "Healthcare Division", 
+    "industry": "healthcare",
+    "riskTolerance": "zero",
+    "enabledFrameworks": ["hipaa", "nist"],
+    "customRules": ["phi_detection", "encryption_required"],
+    "contactEmail": "compliance@healthcare-div.com",
+    "complianceOfficer": "Dr. Sarah Johnson",
+    "escalationMatrix": {
+      "critical": ["ciso@company.com", "legal@company.com"],
+      "high": ["security@company.com", "compliance@healthcare-div.com"]
     }
   }
 }
@@ -954,25 +954,25 @@ Customize security policies in `config/custom-policies.json`:
 
 ```json
 {
-  \"healthcare_strict\": {
-    \"name\": \"Healthcare Strict Security Policy\",
-    \"requiredChecks\": [\"hardcoded_secrets\", \"weak_crypto\", \"phi_exposure\"],
-    \"failThresholds\": {
-      \"critical\": 0,
-      \"high\": 0,
-      \"medium\": 2
+  "healthcare_strict": {
+    "name": "Healthcare Strict Security Policy",
+    "requiredChecks": ["hardcoded_secrets", "weak_crypto", "phi_exposure"],
+    "failThresholds": {
+      "critical": 0,
+      "high": 0,
+      "medium": 2
     },
-    \"complianceFrameworks\": [\"hipaa\", \"nist\"],
-    \"automatedRemediation\": true,
-    \"evidenceCollection\": true
+    "complianceFrameworks": ["hipaa", "nist"],
+    "automatedRemediation": true,
+    "evidenceCollection": true
   },
-  \"enterprise_standard\": {
-    \"name\": \"Enterprise Standard Policy\",
-    \"requiredChecks\": [\"owasp_top_10\"],
-    \"failThresholds\": {
-      \"critical\": 0,
-      \"high\": 5,
-      \"medium\": 20
+  "enterprise_standard": {
+    "name": "Enterprise Standard Policy",
+    "requiredChecks": ["owasp_top_10"],
+    "failThresholds": {
+      "critical": 0,
+      "high": 5,
+      "medium": 20
     }
   }
 }
@@ -984,19 +984,19 @@ Detailed framework settings in `config/compliance-frameworks.json`:
 
 ```json
 {
-  \"hipaa\": {
-    \"version\": \"2013_final_rule\",
-    \"enabled\": true,
-    \"riskTolerance\": \"zero\",
-    \"requiredControls\": [\"164.312(a)\", \"164.312(c)\", \"164.312(e)\"],
-    \"patterns\": {
-      \"phi_patterns\": [
-        \"(?i)(ssn|social\\\\s*security)\\\\s*[:=]?\\\\s*\\\\d{3}-?\\\\d{2}-?\\\\d{4}\",
-        \"(?i)(patient|medical)\\\\s*id\\\\s*[:=]?\\\\s*\\\\d+\"
+  "hipaa": {
+    "version": "2013_final_rule",
+    "enabled": true,
+    "riskTolerance": "zero",
+    "requiredControls": ["164.312(a)", "164.312(c)", "164.312(e)"],
+    "patterns": {
+      "phi_patterns": [
+        "(?i)(ssn|social\\\\s*security)\\\\s*[:=]?\\\\s*\\\\d{3}-?\\\\d{2}-?\\\\d{4}",
+        "(?i)(patient|medical)\\\\s*id\\\\s*[:=]?\\\\s*\\\\d+"
       ]
     },
-    \"slaHours\": 4,
-    \"automatedWorkflows\": [\"phi_exposure\", \"audit_trail\"]
+    "slaHours": 4,
+    "automatedWorkflows": ["phi_exposure", "audit_trail"]
   }
 }
 ```
@@ -1039,7 +1039,7 @@ Use the enhanced compliance script for comprehensive management:
 ./infra/scripts/compliance.sh baseline ./src hipaa   # Create compliance baseline
 
 # Monitoring & Reporting
-./infra/scripts/compliance.sh start-monitoring ./src \"0 */6 * * *\"  # Start monitoring
+./infra/scripts/compliance.sh start-monitoring ./src "0 */6 * * *"  # Start monitoring
 ./infra/scripts/compliance.sh report ./project html   # Generate comprehensive report
 ./infra/scripts/compliance.sh status                  # Check system status
 ./infra/scripts/compliance.sh validate               # Validate configuration
@@ -1076,21 +1076,21 @@ Add organization-specific patterns to vulnerability detection:
 ```javascript
 // In config/custom-compliance-rules.json
 {
-  \"custom_patterns\": {
-    \"company_api_leak\": {
-      \"patterns\": [\"(?i)ACME-API-KEY-[A-Za-z0-9]{32}\"],
-      \"severity\": \"Critical\",
-      \"owaspCategory\": \"A02_Cryptographic_Failures\",
-      \"description\": \"Company API key detected in code\",
-      \"complianceMapping\": {
-        \"hipaa\": [\"164.312(a)(2)(i)\"],
-        \"pci_dss\": [\"3.4\"]
+  "custom_patterns": {
+    "company_api_leak": {
+      "patterns": ["(?i)ACME-API-KEY-[A-Za-z0-9]{32}"],
+      "severity": "Critical",
+      "owaspCategory": "A02_Cryptographic_Failures",
+      "description": "Company API key detected in code",
+      "complianceMapping": {
+        "hipaa": ["164.312(a)(2)(i)"],
+        "pci_dss": ["3.4"]
       }
     },
-    \"internal_service_creds\": {
-      \"patterns\": [\"(?i)(internal[_-]?service)[_-]?(key|token|secret)\\\\s*[:=]\\\\s*[\\\"'][^\\\"'\\\\s]{10,}\"],
-      \"severity\": \"High\",
-      \"description\": \"Internal service credentials detected\"
+    "internal_service_creds": {
+      "patterns": ["(?i)(internal[_-]?service)[_-]?(key|token|secret)\\\\s*[:=]\\\\s*[\"'][^\"'\\\\s]{10,}"],
+      "severity": "High",
+      "description": "Internal service credentials detected"
     }
   }
 }
@@ -1137,44 +1137,44 @@ BASELINE_COMPARISON_CACHE_SIZE=5000
 #### CLI Usage with Compliance
 ```bash
 # Single file scan with compliance frameworks
-echo '{\"filepath\": \"/path/to/file.js\", \"policies\": [\"hipaa\", \"gdpr\"]}' | \\
+echo '{"filepath": "/path/to/file.js", "policies": ["hipaa", "gdpr"]}' | \\
   node src/server.js enhanced_scan_file
 
 # Directory scan with compliance evidence collection
-echo '{\"dirpath\": \"/path/to/project\", \"enableMonitoring\": true}' | \\
+echo '{"dirpath": "/path/to/project", "enableMonitoring": true}' | \\
   node src/server.js enhanced_scan_directory
 
 # Generate compliance report
-echo '{\"scan_path\": \"/path/to/project\", \"report_dir\": \"./reports\", \"format\": \"html\"}' | \\
+echo '{"scan_path": "/path/to/project", "report_dir": "./reports", "format": "html"}' | \\
   node src/server.js generate_enhanced_report
 ```
 
 #### Programmatic Usage with MCP Client
 ```javascript
-import { McpClient } from \"@modelcontextprotocol/sdk/client/mcp.js\";
+import { McpClient } from "@modelcontextprotocol/sdk/client/mcp.js";
 
 const client = new McpClient();
 await client.connect();
 
 // Enhanced scan with compliance
-const result = await client.callTool(\"enhanced_scan_file\", {
-  filepath: \"/path/to/file.js\",
-  policies: [\"hipaa\", \"gdpr\"],
+const result = await client.callTool("enhanced_scan_file", {
+  filepath: "/path/to/file.js",
+  policies: ["hipaa", "gdpr"],
   includeFixSuggestions: true
 });
 
 // Multi-tenant compliance assessment
-const assessment = await client.callTool(\"tenant_compliance_assessment\", {
-  tenant_id: \"healthcare_division\",
-  project_path: \"./patient-portal\"
+const assessment = await client.callTool("tenant_compliance_assessment", {
+  tenant_id: "healthcare_division",
+  project_path: "./patient-portal"
 });
 
 // Collect compliance evidence
-const evidence = await client.callTool(\"collect_compliance_evidence\", {
-  scan_path: \"./src\",
-  frameworks: [\"hipaa\", \"gdpr\"],
-  collector: \"security@company.com\",
-  notes: \"Quarterly audit scan\"
+const evidence = await client.callTool("collect_compliance_evidence", {
+  scan_path: "./src",
+  frameworks: ["hipaa", "gdpr"],
+  collector: "security@company.com",
+  notes: "Quarterly audit scan"
 });
 ```
 
@@ -1269,7 +1269,7 @@ const evidence = await client.callTool(\"collect_compliance_evidence\", {
    ./infra/scripts/compliance.sh validate
    
    # Check framework status
-   echo '{\"action\": \"list\"}' | node src/server.js compliance_frameworks_manage
+   echo '{"action": "list"}' | node src/server.js compliance_frameworks_manage
    
    # Reset compliance configuration
    ./infra/scripts/compliance.sh setup
@@ -1282,7 +1282,7 @@ const evidence = await client.callTool(\"collect_compliance_evidence\", {
    chmod 755 compliance-evidence
    
    # Verify cryptographic signing capability
-   echo '{\"test\": \"evidence\"}' | openssl dgst -sha256
+   echo '{"test": "evidence"}' | openssl dgst -sha256
    ```
 
 7. **Baseline Creation/Drift Detection Issues**
@@ -1292,8 +1292,8 @@ const evidence = await client.callTool(\"collect_compliance_evidence\", {
    
    # Recreate baseline if corrupted
    echo '{
-     \"project_path\": \"./src\",
-     \"frameworks\": [\"owasp\", \"nist\"]
+     "project_path": "./src",
+     "frameworks": ["owasp", "nist"]
    }' | node src/server.js compliance_drift_baseline
    ```
 
@@ -1330,23 +1330,23 @@ curl http://localhost:3001/health
 ./infra/scripts/compliance.sh status
 
 # Test compliance frameworks
-echo '{\"action\": \"list\"}' | node src/server.js compliance_frameworks_manage
+echo '{"action": "list"}' | node src/server.js compliance_frameworks_manage
 ```
 
 ### Performance Diagnostics
 
 ```bash
 # Monitor resource usage during scans
-top -p $(pgrep -f \"node src/server.js\")
+top -p $(pgrep -f "node src/server.js")
 
 # Check compliance scan performance
-time echo '{\"dirpath\": \"./src\"}' | node src/server.js enhanced_scan_directory
+time echo '{"dirpath": "./src"}' | node src/server.js enhanced_scan_directory
 
 # Analyze evidence collection performance
 time echo '{
-  \"scan_path\": \"./src\",
-  \"frameworks\": [\"owasp\"],
-  \"collector\": \"test@example.com\"
+  "scan_path": "./src",
+  "frameworks": ["owasp"],
+  "collector": "test@example.com"
 }' | node src/server.js collect_compliance_evidence
 ```
 
